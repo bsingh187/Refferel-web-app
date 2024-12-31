@@ -17,6 +17,7 @@ export const logIn = async (data) => {
 
         if (!serverResponse.error) {
             toast.success(serverResponse?.message || "Logged in Successfully");
+            localStorage.setItem("token",serverResponse?.token)
         } else {
             toast.error(serverResponse?.message);
         }
