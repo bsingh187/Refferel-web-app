@@ -178,7 +178,7 @@ const SignUpPage = () => {
             </Form>
           )}
         </Formik>
-        <a href="/login" className="login-link">
+        <a href="/" className="login-link">
           Already have an account? Log in
         </a>
       </div>

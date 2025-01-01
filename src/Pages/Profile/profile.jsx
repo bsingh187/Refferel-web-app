@@ -28,7 +28,15 @@ const ProfilePage = () => {
 
   const handleLogOut = () => {
     localStorage.clear();
-    navigate("/login");
+    navigate("/");
+  };
+
+  const handleTeamReports = () => {
+    navigate("/team-reports");
+  };
+
+  const handleNavigate = (path) => {
+    navigate(path);
   };
 
   return (
@@ -110,32 +118,83 @@ const ProfilePage = () => {
             </div>
           </div>
           <div className="earnings-row">
-          <div className="earning-card">
-            today remaining tasks(PCE){userData?.todayremaningtask || 0}
-          </div>
+            <div className="earning-card">
+              today remaining tasks(PCE){userData?.todayremaningtask || 0}
+            </div>
           </div>
         </section>
+
+        {/* Tab Section */}
+        <div className="tab-section">
+          <div className="tab-item">Task Records</div>
+          <div className="tab-item">Audit Task</div>
+          <div className="tab-item">Release Management</div>
+        </div>
+
+        {/* Cards Section */}
+        <div className="cards-container">
+          <div className="crads-adjust">
+            <div className="card">
+              <span className="card-icon">👤</span>
+              <p>Personal Information</p>
+            </div>
+            <div className="card">
+              <span className="card-icon">📅</span>
+              <p>Daily Statement</p>
+            </div>
+          </div>
+          <div className="crads-adjust">
+            <div className="card">
+              <span className="card-icon">📒</span>
+              <p>Accounting Records</p>
+            </div>
+            <div className="card">
+              <span className="card-icon">🤝</span>
+              <p>Invite Friends</p>
+            </div>
+          </div>
+          <div className="crads-adjust">
+            <div className="card" onClick={handleTeamReports}>
+              <span className="card-icon">📊</span>
+              <p>Team Reports</p>
+            </div>
+            <div className="card">
+              <span className="card-icon">📚</span>
+              <p>Helpbook</p>
+            </div>
+          </div>
+          <div className="crads-adjust">
+            <div className="card">
+              <span className="card-icon">💳</span>
+              <p>Credit Centres</p>
+            </div>
+            <div className="card">
+              <span className="card-icon">📥</span>
+              <p>Download App</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Footer */}
       <footer className="mobile-footer">
-        <div className="footer-tab">
+        <div className="footer-tab" onClick={() => handleNavigate("/home")}>
           <span className="tab-icon">🏠</span>
           <span className="tab-label">Home</span>
         </div>
-        <div className="footer-tab">
+        <div className="footer-tab" onClick={() => handleNavigate("/task")}>
           <span className="tab-icon">📋</span>
           <span className="tab-label">Task</span>
         </div>
-        <div className="footer-tab">
+        <div className="footer-tab" onClick={() => handleNavigate("/vip")}>
           <span className="tab-icon">👑</span>
           <span className="tab-label">VIP</span>
         </div>
-        <div className="footer-tab">
+        <div className="footer-tab" onClick={() => handleNavigate("/profit")}>
           <span className="tab-icon">📈</span>
           <span className="tab-label">Profit</span>
         </div>
-        <div className="footer-tab">
+        <div className="footer-tab" onClick={() => handleNavigate("/profile")}>
           <span className="tab-icon">👤</span>
           <span className="tab-label">Profile</span>
         </div>

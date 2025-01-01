@@ -7,7 +7,6 @@
   overflow-y: auto;
   background-color: #f4f4f9;
 
-
   .mobile-header {
     background-color: #003366;
     color: white;
@@ -74,7 +73,6 @@
       }
     }
   }
-  
 }
 
 .cards-container {
@@ -84,6 +82,11 @@
   padding: 20px;
   background-color: #003366; /* Dark blue background */
   border-radius: 8px;
+
+  .cards-adjust {
+    display: flex;
+    gap: 10px;
+  }
 }
 
 .card {
@@ -96,10 +99,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100px;
 }
 
 .card .icon {
-  font-size: 30px; /* Larger icon size */
+  font-size: 20px; /* Larger icon size */
   color: #003366; /* Icon color matching theme */
   margin-bottom: 10px;
 }
@@ -124,7 +128,6 @@
   max-width: 400px; /* Restrict the width */
 }
 
-
 .banner-container {
   margin-bottom: 20px;
 }
@@ -134,8 +137,6 @@
   border-radius: 8px;
 }
 
-
-
 .membership-label {
   font-size: 18px;
   font-weight: bold;
@@ -143,7 +144,6 @@
   margin: 15px 0 10px;
   text-align: left;
 }
-
 
 .membership-list {
   margin-top: 20px;

@@ -46,6 +46,10 @@ const HomePage = () => {
     fetchUserList();
   }, []);
 
+  const handleNavigate = (path) => {
+    navigate(path);
+  };
+
   return (
     <div className="mobile-container">
       {/* Header */}
@@ -55,7 +59,6 @@ const HomePage = () => {
 
       {/* Content */}
       <div className="mobile-content">
-        {error && <p className="error-message">{error}</p>}
         <div className="banner-container">
           {banners.map((banner) => (
             <div key={banner._id} className="banner">
@@ -71,21 +74,25 @@ const HomePage = () => {
         {/* Cards Section */}
         <div className="task-hall-label">Task Hall</div>
         <div className="cards-container">
-          <div className="card">
-            <span className="icon">📹</span>
-            <p>YouTube Like and Follow</p>
+          <div className="cards-adjust">
+            <div className="card">
+              <span className="icon">📹</span>
+              <p>YouTube Like and Follow</p>
+            </div>
+            <div className="card">
+              <span className="icon">📷</span>
+              <p>Instagram Like and Follow</p>
+            </div>
           </div>
-          <div className="card">
-            <span className="icon">📷</span>
-            <p>Instagram Like and Follow</p>
-          </div>
-          <div className="card">
-            <span className="icon">📘</span>
-            <p>Facebook Share</p>
-          </div>
-          <div className="card">
-            <span className="icon">💬</span>
-            <p>Line Message</p>
+          <div className="cards-adjust">
+            <div className="card">
+              <span className="icon">📘</span>
+              <p>Facebook Share</p>
+            </div>
+            <div className="card">
+              <span className="icon">💬</span>
+              <p>Line Message</p>
+            </div>
           </div>
         </div>
 
@@ -115,24 +122,46 @@ const HomePage = () => {
       </div>
 
       {/* Footer */}
-      <footer className="mobile-footer">
+      {/* <footer className="mobile-footer" onClick={handleHomePage}>
         <div className="footer-tab">
           <span className="tab-icon">🏠</span>
           <span className="tab-label">Home</span>
         </div>
-        <div className="footer-tab">
+        <div className="footer-tab" onClick={handleTaskPage}>
           <span className="tab-icon">📋</span>
           <span className="tab-label">Task</span>
         </div>
-        <div className="footer-tab">
+        <div className="footer-tab" onClick={handleVIPPage}>
           <span className="tab-icon">👑</span>
           <span className="tab-label">VIP</span>
         </div>
-        <div className="footer-tab">
+        <div className="footer-tab" onClick={handleProfit}>
           <span className="tab-icon">📈</span>
           <span className="tab-label">Profit</span>
         </div>
-        <div className="footer-tab" onClick={() => navigate("/profile")}>
+        <div className="footer-tab" onClick={handleProfile}>
+          <span className="tab-icon">👤</span>
+          <span className="tab-label">Profile</span>
+        </div>
+      </footer> */}
+        <footer className="mobile-footer">
+        <div className="footer-tab" onClick={() => handleNavigate("/home")}>
+          <span className="tab-icon">🏠</span>
+          <span className="tab-label">Home</span>
+        </div>
+        <div className="footer-tab" onClick={() => handleNavigate("/task")}>
+          <span className="tab-icon">📋</span>
+          <span className="tab-label">Task</span>
+        </div>
+        <div className="footer-tab" onClick={() => handleNavigate("/vip")}>
+          <span className="tab-icon">👑</span>
+          <span className="tab-label">VIP</span>
+        </div>
+        <div className="footer-tab" onClick={() => handleNavigate("/profit")}>
+          <span className="tab-icon">📈</span>
+          <span className="tab-label">Profit</span>
+        </div>
+        <div className="footer-tab" onClick={() => handleNavigate("/profile")}>
           <span className="tab-icon">👤</span>
           <span className="tab-label">Profile</span>
         </div>

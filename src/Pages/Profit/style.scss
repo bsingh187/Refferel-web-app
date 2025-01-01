@@ -1,0 +1,61 @@
+.mobile-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto;
+    height: 100vh;
+    background-color: #f4f4f9;
+  
+    .mobile-header {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+  
+    .mobile-content {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+  
+      .image-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px 0; /* Add spacing around the image */
+  
+        .profit-image {
+          width: 90%; /* Maintain width for better appearance */
+          max-width: 300px; /* Constrain to a maximum width for mobile devices */
+          border-radius: 10px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+  
+    .mobile-footer {
+      background-color: #003366;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+  
+      .footer-tab {
+        text-align: center;
+        color: white;
+        cursor: pointer;
+  
+        .tab-icon {
+          font-size: 20px;
+        }
+  
+        .tab-label {
+          font-size: 12px;
+        }
+  
+        &.active {
+          color: #ffd700; // Highlight active tab
+        }
+      }
+    }
+  }
+  
