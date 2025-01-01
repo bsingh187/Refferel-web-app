@@ -51,6 +51,10 @@ const VipPage = () => {
     navigate(path);
   };
 
+  const handleCardClick = (packageId) => {
+    navigate("/package-details", { state: { packageId } });
+  };
+
   return (
     <div className="vip-container">
       {/* Banner Section */}
@@ -82,55 +86,43 @@ const VipPage = () => {
       </div>
 
       {/* Scrollable Content */}
-      {/* <div className="mobile-content">
+
+      <div className="mobile-content">
+        {/* VIP Levels */}
         <div className="vip-cards-container">
-          {vipLevels.map((level, index) => (
-            <div
-              key={index}
-              className="vip-card"
-              style={{ backgroundColor: level.color }}
-            >
-              <p className="vip-title">{level.title}</p>
-              <p className="vip-tasks">Daily Tasks: {level.tasks}</p>
-            </div>
-          ))}
+          {packages?.map((pkg, index) => {
+            const darkColors = [
+              "#455a64",
+              "#e65100",
+              "#5e35b1",
+              "#00838f",
+              "#b71c1c",
+              "#6a1b9a",
+              "#33691e",
+            ];
+
+            return (
+              <div
+                key={pkg._id}
+                className={`vip-card ${pkg.isDisabled ? "disabled" : ""}`}
+                style={{
+                  backgroundColor: darkColors[index % darkColors.length],
+                  border: pkg.isDisabled
+                    ? "1px solid #616161"
+                    : "2px solid #ffffff",
+                  opacity: pkg.isDisabled ? 0.6 : 1,
+                }}
+                onClick={() => handleCardClick(pkg?._id)}
+              >
+                <p className="vip-title">{pkg?.name}</p>
+                <p className="vip-tasks">
+                  Daily Tasks: {pkg?.dailyTask || pkg?.task}
+                </p>
+              </div>
+            );
+          })}
         </div>
-      </div> */}
-
-<div className="mobile-content">
-  {/* VIP Levels */}
-  <div className="vip-cards-container">
-    {packages?.map((pkg, index) => {
-      const darkColors = [
-        "#455a64", // Dark gray for "Intern"
-        "#e65100", // Dark orange for "VIP1"
-        "#5e35b1", // Dark purple for "VIP2"
-        "#00838f", // Dark cyan for "VIP3"
-        "#b71c1c", // Dark red for "VIP4"
-        "#6a1b9a", // Dark pinkish-purple for "VIP5"
-        "#33691e", // Dark green for "VIP6"
-      ];
-
-      return (
-        <div
-          key={pkg._id}
-          className={`vip-card ${pkg.isDisabled ? "disabled" : ""}`}
-          style={{
-            backgroundColor: darkColors[index % darkColors.length],
-            border: pkg.isDisabled ? "1px solid #616161" : "2px solid #ffffff",
-            opacity: pkg.isDisabled ? 0.6 : 1,
-          }}
-        >
-          <p className="vip-title">{pkg.name}</p>
-          <p className="vip-tasks">
-            Daily Tasks: {pkg.dailyTask || pkg.task}
-          </p>
-        </div>
-      );
-    })}
-  </div>
-</div>
-
+      </div>
 
       {/* Footer */}
       <footer className="mobile-footer">

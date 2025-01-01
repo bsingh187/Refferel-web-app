@@ -33,3 +33,26 @@ export const getAllPackages = async () => {
     }
   }
 };
+
+export const getPackageById = async (packageId) => {
+  try {
+    const response = await axiosInstance.request({
+      method: "GET",
+      url: "/package/get/id",
+      data: { packageId }, 
+      transformRequest: [(data, headers) => {
+        return JSON.stringify(data);
+      }],
+    });
+    return response?.data?.data; 
+  } catch (error) {
+    if (error.response) {
+      throw new Error(error?.response?.data?.message || "An error occurred");
+    } else if (error.request) {
+      throw new Error("No response from server. Please try again later.");
+    } else {
+      throw new Error("An unexpected error occurred.");
+    }
+  }
+};
+

@@ -2,12 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f4f4f9;
+  background-color: #f5f0ef;
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
   height: 100vh;
-  overflow: hidden; /* Ensure footer remains fixed and only the content scrolls */
+  overflow: hidden; 
 
   .banner-section {
     width: 95%;
@@ -68,8 +68,8 @@
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   
     &.disabled {
-      background-color: #616161; // Even darker gray for disabled
-      cursor: not-allowed;
+      background-color: #616161; 
+      cursor: pointer;
     }
   
     .vip-title {
@@ -106,7 +106,6 @@
 
     &.disabled {
       background-color: #b0bec5;
-      cursor: not-allowed;
     }
 
     .vip-title {

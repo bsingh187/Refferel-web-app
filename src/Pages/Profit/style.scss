@@ -25,10 +25,11 @@
         margin: 20px 0; /* Add spacing around the image */
   
         .profit-image {
-          width: 90%; /* Maintain width for better appearance */
-          max-width: 300px; /* Constrain to a maximum width for mobile devices */
+          width: 100%; /* Maintain width for better appearance */
+          max-width: 400px; /* Constrain to a maximum width for mobile devices */
           border-radius: 10px;
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          margin-bottom: 20px;
         }
       }
     }

@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
-import referImage from "../../assets/referImage.png"
+import referImage from "../../assets/referImage.jpg"
 
 const ProfitPage = () => {
   const navigate = useNavigate();
