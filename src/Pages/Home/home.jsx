@@ -15,13 +15,14 @@ import {
   FaUser,
 } from "react-icons/fa";
 import { getRecentlySignedUpUsers } from "../../Service/recentlySignupUser.Service";
+import { toast } from "react-toastify";
 
 const HomePage = () => {
   const [banners, setBanners] = useState([]);
   const [error, setError] = useState("");
   const [userList, setUserList] = useState([]);
   const navigate = useNavigate();
-  console.log(userList, "userList");
+  const isLoggedIn = !!localStorage.getItem("token");
 
   useEffect(() => {
     const fetchBanners = async () => {
@@ -41,8 +42,13 @@ const HomePage = () => {
     fetchUserList();
   }, []);
 
+  // Handle restricted navigation
   const handleNavigate = (path) => {
-    navigate(path);
+    if (!isLoggedIn) {
+      toast.error("Please login or sign up to access this feature.");
+    } else {
+      navigate(path);
+    }
   };
 
   const fetchUserList = async () => {
@@ -52,7 +58,7 @@ const HomePage = () => {
         const maskedPhone =
           user?.phone?.length === 10
             ? `*****${user?.phone?.slice(-5)}`
-            : user?.phone; 
+            : user?.phone;
         return {
           id: user?._id,
           phone: maskedPhone || "N/A",
@@ -69,7 +75,17 @@ const HomePage = () => {
     <div className="mobile-container">
       {/* Header */}
       <header className="mobile-header">
-        <h2>Refer & Earn</h2>
+        <h2>Demo App</h2>
+        {!isLoggedIn && (
+          <div className="auth-buttons">
+            <button className="login-btn" onClick={() => navigate("/")}>
+              Login
+            </button>
+            <button className="signup-btn" onClick={() => navigate("/sign-up")}>
+              Sign Up
+            </button>
+          </div>
+        )}
       </header>
 
       {/* Content */}

@@ -15,6 +15,7 @@ import PrivateRoutes from "./Routes/PrivateRoutes";
 import EditProfilePage from "./Pages/Profile/editProfile";
 import AddBalancePage from "./Pages/AddBalance/addBalance";
 import PackageDetails from "./Pages/VIP/packageDetails";
+import InviteFriendsPage from "./Pages/InviteFriend/inviteFriend";
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/task" element={<PrivateRoutes element={<TaskPage />} />} />
         <Route path="/vip" element={<PrivateRoutes element={<VipPage />} />} />
         <Route path="/package-details" element={<PrivateRoutes element={<PackageDetails />} />} />
+        <Route path="/invite-friends" element={<PrivateRoutes element={<InviteFriendsPage />} />} />
       </Routes>
     </Router>
   );

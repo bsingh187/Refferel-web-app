@@ -8,12 +8,52 @@
   background-color: #f4f4f9;
 
   .mobile-header {
-    background-color: #003366;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    font-size: 18px;
-    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #6200ea; // Adjust this color as needed
+    color: #ffffff;
+
+    h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 10px;
+
+      .login-btn,
+      .signup-btn {
+        padding: 5px 10px;
+        font-size: 14px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &.login-btn {
+          background-color: #ffffff;
+          color: #6200ea;
+          font-weight: bold;
+
+          &:hover {
+            background-color: #e0e0e0;
+          }
+        }
+
+        &.signup-btn {
+          background-color: #ff5722;
+          color: #ffffff;
+          font-weight: bold;
+
+          &:hover {
+            background-color: #e64a19;
+          }
+        }
+      }
+    }
   }
 
   .mobile-content {

@@ -58,6 +58,10 @@ const ProfilePage = () => {
     navigate("/add-balance");
   };
 
+  const handleInviteFriends = () => {
+    navigate("/invite-friends");
+  };
+
   return (
     <div className="mobile-container">
       {/* Header */}
@@ -82,7 +86,7 @@ const ProfilePage = () => {
               <FaEdit className="edit-icon" />
             </button>
             <button onClick={handleLogOut} className="logout-btn">
-              <FaSignOutAlt className="logout-icon" /> Exit Login
+              <FaSignOutAlt className="logout-icon" /> Logout
             </button>
           </div>
         </section>
@@ -148,11 +152,11 @@ const ProfilePage = () => {
         </section>
 
         {/* Tab Section */}
-        <div className="tab-section">
+        {/* <div className="tab-section">
           <div className="tab-item">Task Records</div>
           <div className="tab-item">Audit Task</div>
           <div className="tab-item">Release Management</div>
-        </div>
+        </div> */}
 
         {/* Cards Section */}
         <div className="cards-container">
@@ -171,7 +175,7 @@ const ProfilePage = () => {
               <span className="card-icon">📒</span>
               <p>Accounting Records</p>
             </div>
-            <div className="card">
+            <div className="card" onClick={handleInviteFriends}>
               <span className="card-icon">🤝</span>
               <p>Invite Friends</p>
             </div>
