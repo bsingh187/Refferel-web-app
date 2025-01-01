@@ -3,13 +3,25 @@ import "./style.scss";
 import API_BASE_URL from "../../Service/Apiurl";
 import { getAllBanners } from "../../Service/getAllBanner.Service";
 import { useNavigate } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
+import {
+  FaYoutube,
+  FaInstagram,
+  FaFacebook,
+  FaLine,
+  FaUserCircle,
+  FaCrown,
+  FaPlayCircle,
+  FaGift,
+  FaUser,
+} from "react-icons/fa";
+import { getRecentlySignedUpUsers } from "../../Service/recentlySignupUser.Service";
 
 const HomePage = () => {
   const [banners, setBanners] = useState([]);
   const [error, setError] = useState("");
   const [userList, setUserList] = useState([]);
   const navigate = useNavigate();
+  console.log(userList, "userList");
 
   useEffect(() => {
     const fetchBanners = async () => {
@@ -25,29 +37,32 @@ const HomePage = () => {
       }
     };
 
-    const fetchUserList = async () => {
-      // Mock user list data (replace with API call if needed)
-      const mockUsers = [
-        { id: 1, name: "Congratulations ****1002", coins: 25 },
-        { id: 2, name: "Congratulations ****2295", coins: 71 },
-        { id: 3, name: "Congratulations ****3752", coins: 10 },
-        { id: 4, name: "Congratulations ****1285", coins: 36 },
-        { id: 5, name: "Congratulations ****5432", coins: 29 },
-        { id: 6, name: "Congratulations ****3241", coins: 81 },
-        { id: 7, name: "Congratulations ****8787", coins: 73 },
-        { id: 8, name: "Congratulations ****2323", coins: 44 },
-        { id: 9, name: "Congratulations ****5566", coins: 26 },
-        { id: 10, name: "Congratulations ****9977", coins: 92 },
-      ];
-      setUserList(mockUsers);
-    };
-
     fetchBanners();
     fetchUserList();
   }, []);
 
   const handleNavigate = (path) => {
     navigate(path);
+  };
+
+  const fetchUserList = async () => {
+    try {
+      const users = await getRecentlySignedUpUsers();
+      const formattedUsers = users?.map((user) => {
+        const maskedPhone =
+          user?.phone?.length === 10
+            ? `*****${user?.phone?.slice(-5)}`
+            : user?.phone; 
+        return {
+          id: user?._id,
+          phone: maskedPhone || "N/A",
+          refReward: user?.refReward || 0,
+        };
+      });
+      setUserList(formattedUsers);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (
@@ -71,27 +86,50 @@ const HomePage = () => {
           ))}
         </div>
 
+        <div className="cards-container">
+          <div className="cards-adjust">
+            <div className="card" onClick={() => handleNavigate("/vip")}>
+              <FaCrown className="icon vip-icon" />
+              <p>VIP Area</p>
+            </div>
+            <div className="card">
+              <FaPlayCircle className="icon tutorial-icon" />
+              <p>Video Tutorial</p>
+            </div>
+          </div>
+          <div className="cards-adjust">
+            <div className="card">
+              <FaGift className="icon rewards-icon" />
+              <p>Promotion Rewards</p>
+            </div>
+            <div className="card" onClick={() => handleNavigate("/profile")}>
+              <FaUser className="icon profile-icon" />
+              <p>Profile</p>
+            </div>
+          </div>
+        </div>
+
         {/* Cards Section */}
         <div className="task-hall-label">Task Hall</div>
         <div className="cards-container">
           <div className="cards-adjust">
             <div className="card">
-              <span className="icon">📹</span>
+              <FaYoutube className="icon youtube-icon" />
               <p>YouTube Like and Follow</p>
             </div>
             <div className="card">
-              <span className="icon">📷</span>
+              <FaInstagram className="icon instagram-icon" />
               <p>Instagram Like and Follow</p>
             </div>
           </div>
           <div className="cards-adjust">
             <div className="card">
-              <span className="icon">📘</span>
+              <FaFacebook className="icon facebook-icon" />
               <p>Facebook Share</p>
             </div>
             <div className="card">
-              <span className="icon">💬</span>
-              <p>Line Message</p>
+              <FaLine className="icon line-icon" />
+              <p>Line line</p>
             </div>
           </div>
         </div>
@@ -106,12 +144,12 @@ const HomePage = () => {
                 <FaUserCircle className="profile-avatar" />
 
                 <div className="user-info">
-                  <p>{user?.name}</p>
+                  <p>Congratulations {user?.phone || "Anonymous"}</p>
                 </div>
 
-                {/* Coins */}
+                {/* RefReward */}
                 <div className="coins-display">
-                  <span className="coins">{user.coins}</span>
+                  <span className="coins">{user?.refReward}</span>
                 </div>
               </div>
             ))
@@ -122,29 +160,7 @@ const HomePage = () => {
       </div>
 
       {/* Footer */}
-      {/* <footer className="mobile-footer" onClick={handleHomePage}>
-        <div className="footer-tab">
-          <span className="tab-icon">🏠</span>
-          <span className="tab-label">Home</span>
-        </div>
-        <div className="footer-tab" onClick={handleTaskPage}>
-          <span className="tab-icon">📋</span>
-          <span className="tab-label">Task</span>
-        </div>
-        <div className="footer-tab" onClick={handleVIPPage}>
-          <span className="tab-icon">👑</span>
-          <span className="tab-label">VIP</span>
-        </div>
-        <div className="footer-tab" onClick={handleProfit}>
-          <span className="tab-icon">📈</span>
-          <span className="tab-label">Profit</span>
-        </div>
-        <div className="footer-tab" onClick={handleProfile}>
-          <span className="tab-icon">👤</span>
-          <span className="tab-label">Profile</span>
-        </div>
-      </footer> */}
-        <footer className="mobile-footer">
+      <footer className="mobile-footer">
         <div className="footer-tab" onClick={() => handleNavigate("/home")}>
           <span className="tab-icon">🏠</span>
           <span className="tab-label">Home</span>

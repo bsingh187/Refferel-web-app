@@ -1,0 +1,118 @@
+.vip-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f4f9;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    height: 100vh;
+    overflow: hidden; /* Ensure footer remains fixed and only the content scrolls */
+  
+    .banner-section {
+      width: 95%;
+      margin-bottom: 15px;
+  
+      .vip-banner {
+        width: 100%;
+        border-radius: 10px;
+      }
+  
+      .error-message {
+        color: red;
+        text-align: center;
+        font-size: 14px;
+      }
+    }
+  
+    .tabs-container {
+      display: flex;
+      justify-content: space-between;
+      width: 95%;
+      margin-bottom: 15px;
+  
+      .tab {
+        flex: 1;
+        padding: 10px 5px;
+        text-align: center;
+        font-size: 14px;
+        background: #1c1c1c;
+        color: white;
+        border-radius: 5px;
+        margin: 0 2px;
+        cursor: pointer;
+  
+        &.active {
+          background: #007bff;
+          font-weight: bold;
+        }
+      }
+    }
+  
+    .vip-cards-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      width: 100%;
+      padding-bottom: 60px; 
+  
+      .vip-card {
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        color: white;
+        font-size: 14px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+        .vip-title {
+          font-size: 16px;
+          font-weight: bold;
+        }
+  
+        .vip-tasks {
+          margin-top: 5px;
+        }
+      }
+    }
+  }
+  
+  .mobile-footer {
+    background-color: #003366;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 400px;
+  
+    .footer-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      cursor: pointer;
+  
+      .tab-icon {
+        font-size: 20px;
+      }
+  
+      .tab-label {
+        font-size: 12px;
+        margin-top: 4px;
+      }
+  
+      &.active {
+        color: #ffd700;
+      }
+    }
+  }
+  
+  .mobile-content {
+    flex: 1;
+    overflow-y: auto; /* Enable scrolling for the content area */
+    width: 100%;
+    padding: 10px;
+  }
+  

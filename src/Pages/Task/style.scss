@@ -1,0 +1,156 @@
+.mobile-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #121212;
+  
+    .mobile-header {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  
+    .mobile-content {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+  
+      .task-tabs {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 10px;
+  
+        .tab {
+          flex: 1;
+          padding: 10px;
+          background: #1c1c1c;
+          color: white;
+          text-align: center;
+          font-size: 14px;
+          border-radius: 5px;
+          cursor: pointer;
+          margin: 0 5px;
+  
+          &.active {
+            background: #007bff;
+            font-weight: bold;
+          }
+        }
+      }
+  
+      .task-card {
+        background: #1c1c1c;
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+  
+        .task-icon {
+          align-self: center;
+          margin-bottom: 10px;
+  
+          .youtube-icon {
+            font-size: 50px;
+            color: #ff0000;
+          }
+  
+          .audit-icon,
+          .completed-icon,
+          .failed-icon {
+            font-size: 50px;
+            color: #007bff;
+          }
+  
+          .failed-icon {
+            color: #ff0000;
+          }
+        }
+  
+        .task-details {
+          h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+          }
+  
+          p {
+            font-size: 14px;
+            margin: 5px 0;
+          }
+  
+          .task-info {
+            font-size: 12px;
+  
+            .links {
+              margin-top: 10px;
+  
+              .link {
+                color: #007bff;
+                text-decoration: none;
+                font-size: 14px;
+              }
+            }
+          }
+        }
+  
+        .task-actions {
+          margin-top: 15px;
+          display: flex;
+          justify-content: flex-end;
+          width: 100%;
+  
+          .submit-btn {
+            background: #007bff;
+            color: white;
+            padding: 5px 15px;
+            border: none;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  
+    .mobile-footer {
+      background-color: #003366;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+  
+      .footer-tab {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: white;
+        cursor: pointer;
+  
+        .tab-icon {
+          font-size: 20px;
+        }
+  
+        .tab-label {
+          font-size: 12px;
+          margin-top: 4px;
+        }
+  
+        &.active {
+          color: #ffd700;
+        }
+      }
+    }
+  }
+  
