@@ -49,6 +49,8 @@ import TaskPage from "./Pages/Task/task";
 import VipPage from "./Pages/VIP/vip";
 import CommonRoutes from "./Routes/commonRoutes";
 import PrivateRoutes from "./Routes/PrivateRoutes";
+import EditProfilePage from "./Pages/Profile/editProfile";
+import AddBalancePage from "./Pages/AddBalance/addBalance";
 
 
 function App() {
@@ -64,6 +66,8 @@ function App() {
         {/* Private Routes */}
         <Route path="/home" element={<PrivateRoutes element={<HomePage />} />} />
         <Route path="/profile" element={<PrivateRoutes element={<ProfilePage />} />} />
+        <Route path="/edit-profile" element={<PrivateRoutes element={<EditProfilePage />} />} />
+        <Route path="/add-balance" element={<PrivateRoutes element={<AddBalancePage />} />} />
         <Route path="/team-reports" element={<PrivateRoutes element={<TeamReports />} />} />
         <Route path="/profit" element={<PrivateRoutes element={<ProfitPage />} />} />
         <Route path="/task" element={<PrivateRoutes element={<TaskPage />} />} />

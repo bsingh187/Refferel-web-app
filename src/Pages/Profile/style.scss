@@ -181,3 +181,25 @@
     }
   }
 }
+
+.edit-profile-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+
+  .edit-icon {
+    font-size: 20px;
+  }
+
+  &:hover {
+    color: #0056b3;
+  }
+}
+.wallet-btn{
+  cursor: pointer;
+}

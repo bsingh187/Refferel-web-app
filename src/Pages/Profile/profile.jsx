@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { useNavigate } from "react-router-dom";
-import { FaSignOutAlt, FaUserCircle } from "react-icons/fa";
-import { getUserProfile } from "../../Service/getUserProfile";
+import { FaSignOutAlt, FaUserCircle, FaEdit } from "react-icons/fa";
+import { getUserProfile, getWalletBalance } from "../../Service/getUserProfile";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
   const [error, setError] = useState("");
+  const [totalRevenue, setTotalRevenue] = useState(0);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -23,7 +24,17 @@ const ProfilePage = () => {
       }
     };
 
+    const fetchWallet = async () => {
+      try {
+        const revenue = await getWalletBalance();
+        setTotalRevenue(revenue);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
     fetchUserProfile();
+    fetchWallet();
   }, []);
 
   const handleLogOut = () => {
@@ -39,6 +50,14 @@ const ProfilePage = () => {
     navigate(path);
   };
 
+  const handleEditProfile = () => {
+    navigate("/edit-profile");
+  };
+
+  const handleAddBalance = () => {
+    navigate("/add-balance");
+  };
+
   return (
     <div className="mobile-container">
       {/* Header */}
@@ -52,9 +71,16 @@ const ProfilePage = () => {
           <div className="profile-header">
             <FaUserCircle className="profile-avatar" />
             <div>
-              <p>Account: {userData?.bankAccountNumber || "N/A"}</p>
-              <p>Invitation Code: {userData?.refCode || "N/A"}</p>
+              <p>Account: {userData?.bankAccountNumber || "-"}</p>
+              <p>Invitation Code: {userData?.refCode || "-"}</p>
             </div>
+            <button
+              className="edit-profile-btn"
+              title="Edit Profile"
+              onClick={handleEditProfile}
+            >
+              <FaEdit className="edit-icon" />
+            </button>
             <button onClick={handleLogOut} className="logout-btn">
               <FaSignOutAlt className="logout-icon" /> Exit Login
             </button>
@@ -67,12 +93,9 @@ const ProfilePage = () => {
               Balance: <strong>{userData?.balance || 0} Rs</strong>
             </p>
             <button className="wallet-btn">My Wallet</button>
-          </div>
-          <div className="wallet-rating">
-            <span>Seal</span>
-            <span>Restriction</span>
-            <span>Good</span>
-            <span>Excellent</span>
+            <button className="wallet-btn" onClick={handleAddBalance}>
+              Add Balance
+            </button>
           </div>
         </section>
 
@@ -106,20 +129,20 @@ const ProfilePage = () => {
               This month's Earnings (Rs): {userData?.monthEarning || 0}
             </div>
             <div className="earning-card">
-              Last months's Earnings (Rs): {userData?.lastmonthEarning || 0}
+              Last month's Earnings (Rs): {userData?.lastmonthEarning || 0}
             </div>
           </div>
           <div className="earnings-row">
             <div className="earning-card">
-              Total revenue(Rs): {userData?.totalrevenue || 0}
+              Total revenue (Rs): {totalRevenue || 0}
             </div>
             <div className="earning-card">
-              Complete the task today(PCE){userData?.completetask || 0}
+              Complete the task today (PCE): {userData?.completetask || 0}
             </div>
           </div>
           <div className="earnings-row">
             <div className="earning-card">
-              today remaining tasks(PCE){userData?.todayremaningtask || 0}
+              Today remaining tasks (PCE): {userData?.todayremaningtask || 0}
             </div>
           </div>
         </section>

@@ -23,7 +23,6 @@ const LoginPage = () => {
       const response = await logIn(values);
 
       if (!response.error) {
-        console.log("Login Successful:", response);
         navigate("/home");
       }
     } catch (error) {

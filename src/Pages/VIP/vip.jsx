@@ -3,11 +3,13 @@ import "./style.scss";
 import API_BASE_URL from "../../Service/Apiurl";
 import { getAllBanners } from "../../Service/getAllBanner.Service";
 import { useNavigate } from "react-router-dom";
+import { getAllPackages } from "../../Service/package.Service";
 
 const VipPage = () => {
   const [banners, setBanners] = useState([]);
   const [error, setError] = useState("");
   const [activeTab, setActiveTab] = useState("YouTube");
+  const [packages, setPackages] = useState([]);
 
   const navigate = useNavigate();
 
@@ -28,15 +30,22 @@ const VipPage = () => {
     fetchBanners();
   }, []);
 
-  const vipLevels = [
-    { title: "Intern", tasks: "5", color: "#b0bec5" },
-    { title: "VIP1", tasks: "10", color: "#ffcc80" },
-    { title: "VIP2", tasks: "20", color: "#7e57c2" },
-    { title: "VIP3", tasks: "35", color: "#26c6da" },
-    { title: "VIP4", tasks: "97", color: "#ef5350" },
-    { title: "VIP5", tasks: "158", color: "#ab47bc" },
-    { title: "VIP6", tasks: "238", color: "#8bc34a" },
-  ];
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const packageData = await getAllPackages();
+        if (packageData?.data) {
+          setPackages(packageData.data);
+        } else {
+          setError(packageData?.message || "Failed to load packages.");
+        }
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    fetchPackages();
+  }, []);
 
   const handleNavigate = (path) => {
     navigate(path);
@@ -73,8 +82,7 @@ const VipPage = () => {
       </div>
 
       {/* Scrollable Content */}
-      <div className="mobile-content">
-        {/* VIP Levels */}
+      {/* <div className="mobile-content">
         <div className="vip-cards-container">
           {vipLevels.map((level, index) => (
             <div
@@ -87,7 +95,42 @@ const VipPage = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
+
+<div className="mobile-content">
+  {/* VIP Levels */}
+  <div className="vip-cards-container">
+    {packages?.map((pkg, index) => {
+      const darkColors = [
+        "#455a64", // Dark gray for "Intern"
+        "#e65100", // Dark orange for "VIP1"
+        "#5e35b1", // Dark purple for "VIP2"
+        "#00838f", // Dark cyan for "VIP3"
+        "#b71c1c", // Dark red for "VIP4"
+        "#6a1b9a", // Dark pinkish-purple for "VIP5"
+        "#33691e", // Dark green for "VIP6"
+      ];
+
+      return (
+        <div
+          key={pkg._id}
+          className={`vip-card ${pkg.isDisabled ? "disabled" : ""}`}
+          style={{
+            backgroundColor: darkColors[index % darkColors.length],
+            border: pkg.isDisabled ? "1px solid #616161" : "2px solid #ffffff",
+            opacity: pkg.isDisabled ? 0.6 : 1,
+          }}
+        >
+          <p className="vip-title">{pkg.name}</p>
+          <p className="vip-tasks">
+            Daily Tasks: {pkg.dailyTask || pkg.task}
+          </p>
+        </div>
+      );
+    })}
+  </div>
+</div>
+
 
       {/* Footer */}
       <footer className="mobile-footer">
@@ -99,7 +142,10 @@ const VipPage = () => {
           <span className="tab-icon">📋</span>
           <span className="tab-label">Task</span>
         </div>
-        <div className="footer-tab active" onClick={() => handleNavigate("/vip")}>
+        <div
+          className="footer-tab active"
+          onClick={() => handleNavigate("/vip")}
+        >
           <span className="tab-icon">👑</span>
           <span className="tab-label">VIP</span>
         </div>
