@@ -12,6 +12,27 @@ const InviteFriendsPage = () => {
   const [inviteLink, setInviteLink] = useState("");
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   const fetchReferralCode = async () => {
+  //     try {
+  //       const profileData = await getUserProfile();
+  //       if (profileData?.data?.refCode) {
+  //         const refCode = profileData.data.refCode;
+  //         setRefCode(refCode);
+  //         setInviteLink(`${window.location.origin}/invite-friends/${refCode}`); 
+  //         await inviteFriends(refCode);
+  //       } else {
+  //         toast.error("Referral code not found.");
+  //       }
+  //     } catch (error) {
+  //       toast.error(error.message || "Failed to fetch referral code.");
+  //     }
+  //   };
+
+  //   fetchReferralCode();
+  // }, []);
+
+
   useEffect(() => {
     const fetchReferralCode = async () => {
       try {
@@ -19,7 +40,8 @@ const InviteFriendsPage = () => {
         if (profileData?.data?.refCode) {
           const refCode = profileData.data.refCode;
           setRefCode(refCode);
-          setInviteLink(`${window.location.origin}/invite-friends/${refCode}`); 
+          const staticBaseUrl = `http://3.91.179.101/sign-up/${refCode}`;
+          setInviteLink(staticBaseUrl);
           await inviteFriends(refCode);
         } else {
           toast.error("Referral code not found.");
@@ -28,9 +50,10 @@ const InviteFriendsPage = () => {
         toast.error(error.message || "Failed to fetch referral code.");
       }
     };
-
+  
     fetchReferralCode();
   }, []);
+  
 
   const handleCopy = (text) => {
     navigator.clipboard.writeText(text);

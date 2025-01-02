@@ -23,6 +23,8 @@ const HomePage = () => {
   const [userList, setUserList] = useState([]);
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem("token");
+  const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
+  const [showCards, setShowCards] = useState(false);
 
   useEffect(() => {
     const fetchBanners = async () => {
@@ -40,7 +42,23 @@ const HomePage = () => {
 
     fetchBanners();
     fetchUserList();
+
+    const timer = setTimeout(() => {
+      setShowCards(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
   }, []);
+
+  // Banner rotation logic
+  useEffect(() => {
+    if (banners.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentBannerIndex((prevIndex) => (prevIndex + 1) % banners.length);
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [banners]);
 
   // Handle restricted navigation
   const handleNavigate = (path) => {
@@ -91,15 +109,50 @@ const HomePage = () => {
       {/* Content */}
       <div className="mobile-content">
         <div className="banner-container">
-          {banners.map((banner) => (
-            <div key={banner._id} className="banner">
+          {banners.length > 0 && (
+            <div className="banner">
               <img
-                src={`${API_BASE_URL}${banner.imagePath}`}
-                alt={banner.name}
+                src={`${API_BASE_URL}${banners[currentBannerIndex]?.imagePath}`}
+                alt={banners[currentBannerIndex]?.name}
                 className="banner-image"
               />
             </div>
-          ))}
+          )}
+
+          <div className="carousel-controls">
+            <div
+              className="carousel-control"
+              onClick={() =>
+                setCurrentBannerIndex((prevIndex) =>
+                  prevIndex === 0 ? banners.length - 1 : prevIndex - 1
+                )
+              }
+            >
+              &#x2039;
+            </div>
+            <div
+              className="carousel-control"
+              onClick={() =>
+                setCurrentBannerIndex(
+                  (prevIndex) => (prevIndex + 1) % banners.length
+                )
+              }
+            >
+              &#x203A;
+            </div>
+          </div>
+
+          <div className="carousel-indicators">
+            {banners.map((_, index) => (
+              <div
+                key={index}
+                className={`carousel-indicator ${
+                  index === currentBannerIndex ? "active" : ""
+                }`}
+                onClick={() => setCurrentBannerIndex(index)}
+              ></div>
+            ))}
+          </div>
         </div>
 
         <div className="cards-container">
@@ -107,16 +160,6 @@ const HomePage = () => {
             <div className="card" onClick={() => handleNavigate("/vip")}>
               <FaCrown className="icon vip-icon" />
               <p>VIP Area</p>
-            </div>
-            <div className="card">
-              <FaPlayCircle className="icon tutorial-icon" />
-              <p>Video Tutorial</p>
-            </div>
-          </div>
-          <div className="cards-adjust">
-            <div className="card">
-              <FaGift className="icon rewards-icon" />
-              <p>Promotion Rewards</p>
             </div>
             <div className="card" onClick={() => handleNavigate("/profile")}>
               <FaUser className="icon profile-icon" />
@@ -145,7 +188,7 @@ const HomePage = () => {
             </div>
             <div className="card">
               <FaLine className="icon line-icon" />
-              <p>Line line</p>
+              <p>Coming soon cards</p>
             </div>
           </div>
         </div>

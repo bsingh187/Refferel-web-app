@@ -96,10 +96,10 @@ const ProfilePage = () => {
             <p>
               Balance: <strong>{userData?.balance || 0} Rs</strong>
             </p>
-            <button className="wallet-btn">My Wallet</button>
             <button className="wallet-btn" onClick={handleAddBalance}>
               Add Balance
             </button>
+            <button className="wallet-btn">Withdraw</button>
           </div>
         </section>
 
@@ -107,17 +107,6 @@ const ProfilePage = () => {
           <div className="earnings-row">
             <div className="earning-card">
               Balance (Rs): {userData?.balance || 0}
-            </div>
-            <div className="earning-card">
-              Subordinate Task Commission (Rs): {userData?.taskReward || 0}
-            </div>
-          </div>
-          <div className="earnings-row">
-            <div className="earning-card">
-              Referral Rebate (Rs): {userData?.refReward || 0}
-            </div>
-            <div className="earning-card">
-              Yesterday's Earnings (Rs): {userData?.yesterdayEarning || 0}
             </div>
           </div>
           <div className="earnings-row">
@@ -144,19 +133,7 @@ const ProfilePage = () => {
               Complete the task today (PCE): {userData?.completetask || 0}
             </div>
           </div>
-          <div className="earnings-row">
-            <div className="earning-card">
-              Today remaining tasks (PCE): {userData?.todayremaningtask || 0}
-            </div>
-          </div>
         </section>
-
-        {/* Tab Section */}
-        {/* <div className="tab-section">
-          <div className="tab-item">Task Records</div>
-          <div className="tab-item">Audit Task</div>
-          <div className="tab-item">Release Management</div>
-        </div> */}
 
         {/* Cards Section */}
         <div className="cards-container">
@@ -165,40 +142,22 @@ const ProfilePage = () => {
               <span className="card-icon">👤</span>
               <p>Personal Information</p>
             </div>
-            <div className="card">
-              <span className="card-icon">📅</span>
-              <p>Daily Statement</p>
-            </div>
-          </div>
-          <div className="crads-adjust">
-            <div className="card">
-              <span className="card-icon">📒</span>
-              <p>Accounting Records</p>
-            </div>
             <div className="card" onClick={handleInviteFriends}>
               <span className="card-icon">🤝</span>
               <p>Invite Friends</p>
             </div>
           </div>
           <div className="crads-adjust">
-            <div className="card" onClick={handleTeamReports}>
-              <span className="card-icon">📊</span>
-              <p>Team Reports</p>
-            </div>
             <div className="card">
-              <span className="card-icon">📚</span>
-              <p>Helpbook</p>
+              <span className="card-icon">🤝</span>
+              <p>Support</p>
             </div>
           </div>
           <div className="crads-adjust">
-            <div className="card">
-              <span className="card-icon">💳</span>
-              <p>Credit Centres</p>
-            </div>
-            <div className="card">
-              <span className="card-icon">📥</span>
-              <p>Download App</p>
-            </div>
+            {/* <div className="card" onClick={handleTeamReports}>
+              <span className="card-icon">📊</span>
+              <p>Team Reports</p>
+            </div> */}
           </div>
         </div>
       </div>

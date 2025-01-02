@@ -25,6 +25,7 @@ function App() {
         {/* Public/Common Routes */}
         <Route path="/" element={<CommonRoutes element={<LoginPage />} />} />
         <Route path="/sign-up" element={<CommonRoutes element={<SignUpPage />} />} />
+        <Route path="/sign-up/:refCode" element={<CommonRoutes element={<SignUpPage />} />} />
         <Route path="/forgot-password" element={<CommonRoutes element={<ForgotPasswordPage />} />} />
         <Route path="/verify-otp" element={<CommonRoutes element={<VerifyOtpPage />} />} />
 

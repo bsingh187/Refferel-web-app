@@ -15,19 +15,14 @@ export const verifyOtp = async (otp) => {
     try {
         const email = localStorage.getItem("email");
         if (!email) {
-            console.error("Email not found in localStorage");
             throw new Error("Email not found. Please sign up again.");
         }
 
         // Payload for the API
         const payload = { email, otp };
 
-        console.log("Sending payload to API:", payload);
-
         // Call the API
         const response = await axiosInstance.post("/verify", payload);
-
-        console.log("API Response:", response?.data);
 
         // Show success or error toast based on the response
         if (response?.data?.success) {
@@ -42,7 +37,7 @@ export const verifyOtp = async (otp) => {
 
         if (error.response) {
             const errorMessage = error.response.data.message || "An error occurred";
-            toast.error(errorMessage);
+            toast.success(errorMessage);
             throw new Error(errorMessage);
         } else if (error.request) {
             toast.error("No response from server. Please try again later.");

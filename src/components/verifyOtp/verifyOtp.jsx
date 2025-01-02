@@ -36,15 +36,12 @@ const VerifyOtpPage = () => {
         setIsSubmitting(true);
         setError("");
   
-        console.log("Verifying OTP:", otpValue); // Debugging
   
         // Call verifyOtp service
         const response = await verifyOtp(otpValue);
   
-        console.log("OTP Verified:", response); // Debugging
         navigate("/home");
       } catch (error) {
-        console.error("Verification error:", error); // Debugging
         setError(error.message);
       } finally {
         setIsSubmitting(false);

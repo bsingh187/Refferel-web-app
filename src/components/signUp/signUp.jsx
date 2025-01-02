@@ -1,11 +1,12 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./style.scss";
 import { signUp } from "../../Service/signUp.Service";
 
 const SignUpPage = () => {
+  const { refCode } = useParams();
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -14,7 +15,7 @@ const SignUpPage = () => {
     instagramId: "",
     password: "",
     confirmPassword: "",
-    refByCode: "",
+    refByCode: refCode || "",
   };
 
   const validationSchema = Yup.object({
@@ -32,10 +33,11 @@ const SignUpPage = () => {
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
-    refByCode: Yup.string().required("Referral Code is required"),
+    // refByCode: Yup.string().required("Referral Code is required"),
   });
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const onSubmit = async (
     values,
@@ -43,6 +45,7 @@ const SignUpPage = () => {
   ) => {
     try {
       const { confirmPassword, ...payload } = values;
+      payload.phone = String(payload.phone);
 
       const response = await signUp(payload);
 
@@ -65,6 +68,14 @@ const SignUpPage = () => {
     }
   };
 
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const referralCode = params.get("referralCode");
+    if (referralCode) {
+      initialValues.refByCode = referralCode;
+    }
+  }, [location]);
+
   return (
     <div className="main-container">
       <div className="sign-up-container">
@@ -76,9 +87,6 @@ const SignUpPage = () => {
         >
           {({ isSubmitting, errors }) => (
             <Form>
-              {errors.general && (
-                <div className="error general-error">{errors.general}</div>
-              )}
               <div className="form-content">
                 <div className="form-group">
                   <label htmlFor="firstName">
@@ -92,9 +100,7 @@ const SignUpPage = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="lastName">
-                    Last Name
-                  </label>
+                  <label htmlFor="lastName">Last Name</label>
                   <Field type="text" id="lastName" name="lastName" />
                 </div>
                 <div className="form-group">
@@ -156,16 +162,15 @@ const SignUpPage = () => {
                     className="error"
                   />
                 </div>
-                <div className="form-group">
+                {/* <div className="form-group">
                   <label htmlFor="refByCode">
                     Referral Code<span className="required">*</span>
                   </label>
                   <Field type="text" id="refByCode" name="refByCode" />
-                  <ErrorMessage
-                    name="refByCode"
-                    component="div"
-                    className="error"
-                  />
+                </div> */}
+                <div className="form-group">
+                  <label htmlFor="refByCode">Referral Code</label>
+                  <Field type="text" id="refByCode" name="refByCode" />
                 </div>
               </div>
               <button
