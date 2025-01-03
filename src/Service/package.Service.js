@@ -22,7 +22,7 @@ axiosInstance.interceptors.request.use((config) => {
 export const getAllPackages = async () => {
   try {
     const response = await axiosInstance.get("/package/get/all");
-    return response?.data; // Return the API response
+    return response?.data; 
   } catch (error) {
     if (error.response) {
       throw new Error(error?.response?.data?.message || "An error occurred");
@@ -37,7 +37,7 @@ export const getAllPackages = async () => {
 export const getPackageById = async (packageId) => {
   try {
     const response = await axiosInstance.request({
-      method: "GET",
+      method: "POST",
       url: "/package/get/id",
       data: { packageId }, 
       transformRequest: [(data, headers) => {

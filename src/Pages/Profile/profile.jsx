@@ -109,7 +109,7 @@ const ProfilePage = () => {
               Balance (Rs): {userData?.balance || 0}
             </div>
           </div>
-          <div className="earnings-row">
+          {/* <div className="earnings-row">
             <div className="earning-card">
               Today's Earnings (Rs): {userData?.todayEarning || 0}
             </div>
@@ -132,7 +132,7 @@ const ProfilePage = () => {
             <div className="earning-card">
               Complete the task today (PCE): {userData?.completetask || 0}
             </div>
-          </div>
+          </div> */}
         </section>
 
         {/* Cards Section */}
@@ -176,11 +176,15 @@ const ProfilePage = () => {
           <span className="tab-icon">👑</span>
           <span className="tab-label">VIP</span>
         </div>
+        <div className="footer-tab" onClick={() => handleNavigate("/wallet")}>
+          <span className="tab-icon">🏠</span>
+          <span className="tab-label">Wallet</span>
+        </div>
         <div className="footer-tab" onClick={() => handleNavigate("/profit")}>
           <span className="tab-icon">📈</span>
           <span className="tab-label">Profit</span>
         </div>
-        <div className="footer-tab" onClick={() => handleNavigate("/profile")}>
+        <div className="footer-tab active" onClick={() => handleNavigate("/profile")}>
           <span className="tab-icon">👤</span>
           <span className="tab-label">Profile</span>
         </div>

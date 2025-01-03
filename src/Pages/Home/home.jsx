@@ -188,7 +188,7 @@ const HomePage = () => {
             </div>
             <div className="card">
               <FaLine className="icon line-icon" />
-              <p>Coming soon cards</p>
+              <p>Coming soon...</p>
             </div>
           </div>
         </div>
@@ -220,7 +220,7 @@ const HomePage = () => {
 
       {/* Footer */}
       <footer className="mobile-footer">
-        <div className="footer-tab" onClick={() => handleNavigate("/home")}>
+        <div className="footer-tab active" onClick={() => handleNavigate("/home")}>
           <span className="tab-icon">🏠</span>
           <span className="tab-label">Home</span>
         </div>
@@ -231,6 +231,10 @@ const HomePage = () => {
         <div className="footer-tab" onClick={() => handleNavigate("/vip")}>
           <span className="tab-icon">👑</span>
           <span className="tab-label">VIP</span>
+        </div>
+        <div className="footer-tab" onClick={() => handleNavigate("/wallet")}>
+          <span className="tab-icon">🏠</span>
+          <span className="tab-label">Wallet</span>
         </div>
         <div className="footer-tab" onClick={() => handleNavigate("/profit")}>
           <span className="tab-icon">📈</span>

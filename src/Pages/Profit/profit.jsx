@@ -42,7 +42,11 @@ const ProfitPage = () => {
           <span className="tab-icon">👑</span>
           <span className="tab-label">VIP</span>
         </div>
-        <div className="footer-tab" onClick={() => handleNavigate("/profit")}>
+        <div className="footer-tab" onClick={() => handleNavigate("/wallet")}>
+          <span className="tab-icon">🏠</span>
+          <span className="tab-label">Wallet</span>
+        </div>
+        <div className="footer-tab active" onClick={() => handleNavigate("/profit")}>
           <span className="tab-icon">📈</span>
           <span className="tab-label">Profit</span>
         </div>

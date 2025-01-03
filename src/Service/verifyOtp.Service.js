@@ -18,26 +18,20 @@ export const verifyOtp = async (otp) => {
             throw new Error("Email not found. Please sign up again.");
         }
 
-        // Payload for the API
         const payload = { email, otp };
 
-        // Call the API
         const response = await axiosInstance.post("/verify", payload);
 
-        // Show success or error toast based on the response
-        if (response?.data?.success) {
-            toast.success(response?.data?.message || "OTP Verified Successfully!");
+        if (response?.data?.statusCode === 201) {
+            toast.success(response?.data?.message || "SignUp successfully.");
         } else {
             toast.error(response?.data?.message || "Invalid OTP.");
         }
-
         return response?.data;
     } catch (error) {
-        console.error("Error occurred in verifyOtp:", error);
-
         if (error.response) {
             const errorMessage = error.response.data.message || "An error occurred";
-            toast.success(errorMessage);
+            toast.error(errorMessage); 
             throw new Error(errorMessage);
         } else if (error.request) {
             toast.error("No response from server. Please try again later.");

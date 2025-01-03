@@ -61,9 +61,9 @@ const LoginPage = () => {
             <button type="submit" className="submit-btn" disabled={isSubmitting}>
               {isSubmitting ? "Logging In..." : "Login"}
             </button>
-            <p className="forgot-password" onClick={() => navigate("/forgot-password")}>
+            {/* <p className="forgot-password" onClick={() => navigate("/forgot-password")}>
               Forgot Password?
-            </p>
+            </p> */}
           </Form>
         )}
       </Formik>

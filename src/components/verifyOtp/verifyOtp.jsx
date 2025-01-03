@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { verifyOtp } from "../../Service/verifyOtp.Service"; 
+import { verifyOtp } from "../../Service/verifyOtp.Service";
 import "./style.scss";
 
 const VerifyOtpPage = () => {
@@ -11,23 +11,21 @@ const VerifyOtpPage = () => {
 
   const handleChange = (value, index) => {
     if (!/^[0-9]*$/.test(value)) return;
-  
+
     const updatedOtp = [...otp];
     updatedOtp[index] = value;
     setOtp(updatedOtp);
-  
+
     if (value && index < otp.length - 1) {
       document.getElementById(`otp-${index + 1}`).focus();
     }
   };
-  
 
   const handleKeyDown = (e, index) => {
     if (e.key === "Backspace" && otp[index] === "" && index > 0) {
       document.getElementById(`otp-${index - 1}`).focus();
     }
   };
-  
 
   const handleVerify = async () => {
     const otpValue = otp.join("");
@@ -35,11 +33,8 @@ const VerifyOtpPage = () => {
       try {
         setIsSubmitting(true);
         setError("");
-  
-  
-        // Call verifyOtp service
         const response = await verifyOtp(otpValue);
-  
+
         navigate("/home");
       } catch (error) {
         setError(error.message);
@@ -50,7 +45,6 @@ const VerifyOtpPage = () => {
       setError("Please enter a valid 4-digit OTP.");
     }
   };
-  
 
   return (
     <div className="verify-otp-container">

@@ -15,7 +15,6 @@ const ForgotPasswordPage = () => {
   });
 
   const onSubmit = (values) => {
-    console.log("Forgot Password Data", values);
     alert("Password reset link sent to your email.");
   };
 

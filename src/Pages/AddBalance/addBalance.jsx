@@ -18,7 +18,6 @@ const AddBalancePage = () => {
     setLoading(true);
     try {
       const response = await addBalance(Number(amount));
-      console.log("Add Balance Response:", response);
       navigate("/profile");
     } catch (error) {
       console.error("Error adding balance:", error);

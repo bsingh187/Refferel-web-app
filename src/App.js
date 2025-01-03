@@ -30,6 +30,7 @@ function App() {
         <Route path="/verify-otp" element={<CommonRoutes element={<VerifyOtpPage />} />} />
 
         {/* Private Routes */}
+        <Route path="/dashboard" element={<CommonRoutes element={<HomePage />} />} />
         <Route path="/home" element={<PrivateRoutes element={<HomePage />} />} />
         <Route path="/profile" element={<PrivateRoutes element={<ProfilePage />} />} />
         <Route path="/edit-profile" element={<PrivateRoutes element={<EditProfilePage />} />} />
@@ -38,6 +39,7 @@ function App() {
         <Route path="/profit" element={<PrivateRoutes element={<ProfitPage />} />} />
         <Route path="/task" element={<PrivateRoutes element={<TaskPage />} />} />
         <Route path="/vip" element={<PrivateRoutes element={<VipPage />} />} />
+        {/* <Route path="/wallet" element={<PrivateRoutes element={<WalletPage />} />} /> */}
         <Route path="/package-details" element={<PrivateRoutes element={<PackageDetails />} />} />
         <Route path="/invite-friends" element={<PrivateRoutes element={<InviteFriendsPage />} />} />
       </Routes>

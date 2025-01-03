@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getPackageById } from "../../Service/package.Service";
-import "./style.scss";
+import "./packageDetails.scss";
 
 const PackageDetails = () => {
   const location = useLocation();
