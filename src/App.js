@@ -13,9 +13,9 @@ import VipPage from "./Pages/VIP/vip";
 import CommonRoutes from "./Routes/commonRoutes";
 import PrivateRoutes from "./Routes/PrivateRoutes";
 import EditProfilePage from "./Pages/Profile/editProfile";
-import AddBalancePage from "./Pages/AddBalance/addBalance";
 import PackageDetails from "./Pages/VIP/packageDetails";
 import InviteFriendsPage from "./Pages/InviteFriend/inviteFriend";
+import WalletPage from "./Pages/Wallet/wallet";
 
 
 function App() {
@@ -34,12 +34,11 @@ function App() {
         <Route path="/home" element={<PrivateRoutes element={<HomePage />} />} />
         <Route path="/profile" element={<PrivateRoutes element={<ProfilePage />} />} />
         <Route path="/edit-profile" element={<PrivateRoutes element={<EditProfilePage />} />} />
-        <Route path="/add-balance" element={<PrivateRoutes element={<AddBalancePage />} />} />
         <Route path="/team-reports" element={<PrivateRoutes element={<TeamReports />} />} />
         <Route path="/profit" element={<PrivateRoutes element={<ProfitPage />} />} />
         <Route path="/task" element={<PrivateRoutes element={<TaskPage />} />} />
         <Route path="/vip" element={<PrivateRoutes element={<VipPage />} />} />
-        {/* <Route path="/wallet" element={<PrivateRoutes element={<WalletPage />} />} /> */}
+        <Route path="/wallet" element={<PrivateRoutes element={<WalletPage />} />} />
         <Route path="/package-details" element={<PrivateRoutes element={<PackageDetails />} />} />
         <Route path="/invite-friends" element={<PrivateRoutes element={<InviteFriendsPage />} />} />
       </Routes>

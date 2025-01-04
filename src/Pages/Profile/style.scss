@@ -19,8 +19,8 @@
   .mobile-content {
     flex: 1;
     padding: 10px;
-    overflow-y: auto; /* Allows content to scroll */
-    margin-bottom: 40px; /* Ensures footer doesn't overlap content */
+    overflow-y: auto; 
+    margin-bottom: 40px;
 
     .tab-section {
       display: flex;
@@ -54,13 +54,13 @@
       }
 
       .card {
-        flex: 0 0 calc(50% - 10px); /* Fixed width for 2 cards in a row with 10px gap */
+        flex: 0 0 calc(50% - 10px);
         background-color: #ffffff;
         border-radius: 8px;
         padding: 15px;
         text-align: center;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        height: 60px; /* Consistent height for all cards */
+        height: 60px; 
         display: flex;
         align-items: center;
         justify-content: center;
@@ -89,6 +89,11 @@
           margin-right: 10px;
         }
 
+        div {
+          flex-grow: 1;
+          text-align: left;
+        }
+
         .logout-btn {
           display: flex;
           align-items: center;
@@ -106,33 +111,7 @@
         }
       }
     }
-
-    .wallet-section {
-      background: #1b263b;
-      color: white;
-      padding: 15px;
-      border-radius: 10px;
-
-      .wallet-info {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        .wallet-btn {
-          background-color: #007bff;
-          color: white;
-          padding: 5px 10px;
-          border: none;
-          border-radius: 5px;
-        }
-      }
-
-      .wallet-rating {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 10px;
-      }
-    }
+    
 
     .earnings-section {
       .earnings-row {
@@ -152,58 +131,31 @@
       }
     }
   }
-
-  .mobile-footer {
-    background-color: #003366;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 375px;
-
-    .footer-tab {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: white;
-      cursor: pointer;
-
-      .tab-icon {
-        font-size: 20px;
-      }
-
-      .tab-label {
-        font-size: 12px;
-        margin-top: 4px;
-      }
-
-      &.active {
-        color: #ffd700;
-      }
-    }
-  }
 }
 
-.edit-profile-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: white;
-  font-size: 18px;
+.edit-profile-btn,
+.logout-btn {
   display: flex;
   align-items: center;
-  margin-left: 10px;
-
-  .edit-icon {
-    font-size: 20px;
-  }
-
-  &:hover {
-    color: #0056b3;
-  }
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px; 
+  white-space: nowrap; 
 }
-.wallet-btn{
+.logout-btn {
+  background-color: red; 
+}
+
+.edit-icon,
+.logout-icon {
+  margin-right: 5px; 
+  font-size: 16px;
+}
+
+.wallet-btn {
   cursor: pointer;
 }

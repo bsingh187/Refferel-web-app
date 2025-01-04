@@ -220,7 +220,7 @@ const HomePage = () => {
 
       {/* Footer */}
       <footer className="mobile-footer">
-        <div className="footer-tab active" onClick={() => handleNavigate("/home")}>
+        <div className="footer-tab" onClick={() => handleNavigate("/home")}>
           <span className="tab-icon">🏠</span>
           <span className="tab-label">Home</span>
         </div>

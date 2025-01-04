@@ -33,30 +33,5 @@
         }
       }
     }
-  
-    .mobile-footer {
-      background-color: #003366;
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 0;
-  
-      .footer-tab {
-        text-align: center;
-        color: white;
-        cursor: pointer;
-  
-        .tab-icon {
-          font-size: 20px;
-        }
-  
-        .tab-label {
-          font-size: 12px;
-        }
-  
-        &.active {
-          color: #ffd700;
-        }
-      }
-    }
   }
   

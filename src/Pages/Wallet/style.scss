@@ -1,0 +1,155 @@
+.mobile-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0 auto;
+  height: 100vh;
+  background-color: #f4f4f9;
+  overflow: hidden;
+
+  .mobile-header {
+    position: sticky;
+    top: 0;
+    background-color: #003366;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    z-index: 10;
+
+    h2 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+  }
+
+  .balance-info {
+    text-align: center;
+    margin: 1rem 0;
+
+    h4 {
+      font-weight: bold;
+      color: #333;
+    }
+
+    p {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #003366;
+    }
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+
+    .action-btn {
+      flex: 1;
+      margin: 0 0.5rem;
+      padding: 0.8rem;
+      background: #003366;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+
+      &:hover {
+        background: #0055aa;
+      }
+
+      &.active {
+        background: #002244;
+      }
+    }
+  }
+
+  .edit-profile-form {
+    margin: 0 1rem 1rem;
+
+    .form-group {
+      margin-bottom: 1rem;
+
+      label {
+        font-size: 0.9rem;
+        font-weight: bold;
+        color: #003366;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-top: 0.5rem;
+        font-size: 1rem;
+      }
+    }
+
+    .save-btn {
+      width: 100%;
+      padding: 0.8rem;
+      background: #003366;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+
+      &:hover {
+        background: #0055aa;
+      }
+
+      &:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .transactions-section {
+    flex-grow: 1;
+    margin-bottom: 15px !important;
+    padding: 1rem;
+    overflow-y: auto; 
+    max-height: 50%; 
+
+    h4 {
+      margin-bottom: 1rem;
+      color: #003366;
+      font-weight: bold;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        p {
+          margin: 0.5rem 0;
+          font-size: 0.9rem;
+
+          strong {
+            font-weight: bold;
+            color: #003366;
+          }
+        }
+      }
+    }
+
+    .no-transactions {
+      text-align: center;
+      color: #777;
+      font-size: 0.9rem;
+    }
+  }
+}

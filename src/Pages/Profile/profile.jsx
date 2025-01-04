@@ -3,6 +3,7 @@ import "./style.scss";
 import { useNavigate } from "react-router-dom";
 import { FaSignOutAlt, FaUserCircle, FaEdit } from "react-icons/fa";
 import { getUserProfile, getWalletBalance } from "../../Service/getUserProfile";
+import FooterComponent from "../../components/footer";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -46,16 +47,8 @@ const ProfilePage = () => {
     navigate("/team-reports");
   };
 
-  const handleNavigate = (path) => {
-    navigate(path);
-  };
-
   const handleEditProfile = () => {
     navigate("/edit-profile");
-  };
-
-  const handleAddBalance = () => {
-    navigate("/add-balance");
   };
 
   const handleInviteFriends = () => {
@@ -75,31 +68,19 @@ const ProfilePage = () => {
           <div className="profile-header">
             <FaUserCircle className="profile-avatar" />
             <div>
-              <p>Account: {userData?.bankAccountNumber || "-"}</p>
-              <p>Invitation Code: {userData?.refCode || "-"}</p>
+              <p>Account : {userData?.bankAccountNumber || "-"}</p>
+              <p>Invitation Code : {userData?.refCode || "-"}</p>
             </div>
             <button
               className="edit-profile-btn"
               title="Edit Profile"
               onClick={handleEditProfile}
             >
-              <FaEdit className="edit-icon" />
+              <FaEdit className="edit-icon" /> Edit
             </button>
             <button onClick={handleLogOut} className="logout-btn">
               <FaSignOutAlt className="logout-icon" /> Logout
             </button>
-          </div>
-        </section>
-
-        <section className="wallet-section">
-          <div className="wallet-info">
-            <p>
-              Balance: <strong>{userData?.balance || 0} Rs</strong>
-            </p>
-            <button className="wallet-btn" onClick={handleAddBalance}>
-              Add Balance
-            </button>
-            <button className="wallet-btn">Withdraw</button>
           </div>
         </section>
 
@@ -163,32 +144,8 @@ const ProfilePage = () => {
       </div>
 
       {/* Footer */}
-      <footer className="mobile-footer">
-        <div className="footer-tab" onClick={() => handleNavigate("/home")}>
-          <span className="tab-icon">🏠</span>
-          <span className="tab-label">Home</span>
-        </div>
-        <div className="footer-tab" onClick={() => handleNavigate("/task")}>
-          <span className="tab-icon">📋</span>
-          <span className="tab-label">Task</span>
-        </div>
-        <div className="footer-tab" onClick={() => handleNavigate("/vip")}>
-          <span className="tab-icon">👑</span>
-          <span className="tab-label">VIP</span>
-        </div>
-        <div className="footer-tab" onClick={() => handleNavigate("/wallet")}>
-          <span className="tab-icon">🏠</span>
-          <span className="tab-label">Wallet</span>
-        </div>
-        <div className="footer-tab" onClick={() => handleNavigate("/profit")}>
-          <span className="tab-icon">📈</span>
-          <span className="tab-label">Profit</span>
-        </div>
-        <div className="footer-tab active" onClick={() => handleNavigate("/profile")}>
-          <span className="tab-icon">👤</span>
-          <span className="tab-label">Profile</span>
-        </div>
-      </footer>
+
+      <FooterComponent />
     </div>
   );
 };

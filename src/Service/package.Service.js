@@ -56,3 +56,26 @@ export const getPackageById = async (packageId) => {
   }
 };
 
+export const buyPackage = async (packageId) => {
+  try {
+    const response = await axiosInstance.request({
+      method: "POST",
+      url: "/package/buy",
+      data: { packageId },
+      transformRequest: [(data, headers) => {
+        return JSON.stringify(data);
+      }],
+    });
+    return response?.data; 
+  } catch (error) {
+    if (error.response) {
+      throw new Error(error?.response?.data?.message || "An error occurred");
+    } else if (error.request) {
+      throw new Error("No response from server. Please try again later.");
+    } else {
+      throw new Error("An unexpected error occurred.");
+    }
+  }
+};
+
+

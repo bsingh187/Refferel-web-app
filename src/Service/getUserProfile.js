@@ -97,24 +97,4 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
-// Service to add balance
-export const addBalance = async (amount) => {
-  try {
-    const response = await axiosInstance.post("/addBal", { amount });
-    if (response?.data?.success) {
-      toast.success(response?.data?.msg || "Balance added successfully");
-    } else {
-      toast.error(response?.data?.msg || "Failed to add balance");
-    }
-    return response?.data;
-  } catch (error) {
-    if (error.response) {
-      toast.error(error?.response?.data?.msg || "An error occurred");
-    } else if (error.request) {
-      toast.error("No response from server. Please try again later.");
-    } else {
-      toast.error("An unexpected error occurred.");
-    }
-    throw error;
-  }
-};
+

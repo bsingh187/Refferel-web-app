@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import "./style.scss";
-import { useNavigate } from "react-router-dom";
 import { FaYoutube, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+import FooterComponent from "../../components/footer";
 
 const TaskPage = () => {
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Doing");
 
-  const handleNavigate = (path) => {
-    navigate(path);
-  };
 
   const taskData = {
     Doing: {
@@ -93,32 +89,7 @@ const TaskPage = () => {
       </div>
 
       {/* Footer */}
-      <footer className="mobile-footer">
-        <div className="footer-tab" onClick={() => handleNavigate("/home")}>
-          <span className="tab-icon">🏠</span>
-          <span className="tab-label">Home</span>
-        </div>
-        <div className="footer-tab active" onClick={() => handleNavigate("/task")}>
-          <span className="tab-icon">📋</span>
-          <span className="tab-label">Task</span>
-        </div>
-        <div className="footer-tab" onClick={() => handleNavigate("/vip")}>
-          <span className="tab-icon">👑</span>
-          <span className="tab-label">VIP</span>
-        </div>
-        <div className="footer-tab" onClick={() => handleNavigate("/wallet")}>
-          <span className="tab-icon">🏠</span>
-          <span className="tab-label">Wallet</span>
-        </div>
-        <div className="footer-tab" onClick={() => handleNavigate("/profit")}>
-          <span className="tab-icon">📈</span>
-          <span className="tab-label">Profit</span>
-        </div>
-        <div className="footer-tab" onClick={() => handleNavigate("/profile")}>
-          <span className="tab-icon">👤</span>
-          <span className="tab-label">Profile</span>
-        </div>
-      </footer>
+       <FooterComponent />
     </div>
   );
 };
