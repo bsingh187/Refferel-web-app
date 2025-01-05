@@ -35,16 +35,6 @@ export const getUserProfile = async () => {
   }
 };
 
-
-// Interceptor to include token from localStorage
-axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token"); // Retrieve token from localStorage
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`; // Add token to Authorization header
-  }
-  return config;
-});
-
 // Service to update bank details
 export const updateBankDetails = async (bankDetails) => {
   try {
@@ -58,16 +48,6 @@ export const updateBankDetails = async (bankDetails) => {
     throw new Error(errorMessage);
   }
 };
-
-
-// Interceptor to include token from localStorage
-axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
 
 // Fetch Wallet Balance
 export const getWalletBalance = async () => {
@@ -87,14 +67,3 @@ export const getWalletBalance = async () => {
     }
   }
 };
-
-// Interceptor to include token from localStorage
-axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
-

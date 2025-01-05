@@ -1,0 +1,115 @@
+// .mobile-container {
+//     display: flex;
+//     flex-direction: column;
+//     max-width: 400px;
+//     margin: 0 auto;
+//     height: 100vh;
+//     overflow-y: auto;
+//     overflow: hidden;
+//     background-color: #121212;
+
+
+//     .mobile-header {
+//       background-color: #142850;
+//       color: white;
+//       padding: 10px;
+//       text-align: center;
+//       font-size: 12px;
+//       font-weight: bold;
+//       display: flex;
+//       align-items: center;
+  
+//       .back-button {
+//         background: none;
+//         color: white;
+//         border: none;
+//         font-size: 18px;
+//         cursor: pointer;
+//         margin-right: auto;
+  
+//         &:hover {
+//           color: #29b6f6;
+//         }
+//       }
+//     }
+//   }
+
+
+.mobile-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0 auto;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: #121212;
+
+  .mobile-header {
+    background-color: #142850;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+
+    .back-button {
+      background: none;
+      color: white;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      margin-right: auto;
+
+      &:hover {
+        color: #29b6f6;
+      }
+    }
+  }
+
+  .mobile-content {
+    flex-grow: 1;
+    padding: 20px;
+  }
+
+  .task-details-card {
+    background-color: gray;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+
+    .task-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .task-details-info p {
+      margin: 5px 0;
+      font-size: 14px;
+
+      a {
+        color: #29b6f6;
+        text-decoration: underline;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  .no-task-details {
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    color: #f44336;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}

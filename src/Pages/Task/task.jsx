@@ -1,27 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.scss";
-import { FaYoutube, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+import {
+  FaYoutube,
+  FaInstagram,
+  FaFacebook,
+  FaCheckCircle,
+  FaExclamationCircle,
+} from "react-icons/fa";
 import FooterComponent from "../../components/footer";
+import {
+  filteredTask,
+  filteredSocialTask,
+  performTask,
+} from "../../Service/task.Service"; // Import both services
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const TaskPage = () => {
-  const [activeTab, setActiveTab] = useState("Doing");
-
+  const [activeTab, setActiveTab] = useState("Audit");
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [socialTaskloading, setSocialTaskLoading] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("youtube");
+  const [categoryTasks, setCategoryTasks] = useState([]);
+  const navigate = useNavigate();
 
   const taskData = {
-    Doing: {
-      showSubmit: true,
-      icon: <FaYoutube className="youtube-icon" />,
-      label: "YouTube Task Requirements",
-    },
     Audit: {
       showSubmit: false,
       icon: <FaCheckCircle className="audit-icon" />,
       label: "Audit",
     },
-    Completed: {
+    Confirmed: {
       showSubmit: false,
       icon: <FaCheckCircle className="completed-icon" />,
-      label: "Completed",
+      label: "Confirmed",
     },
     Failed: {
       showSubmit: false,
@@ -29,6 +42,52 @@ const TaskPage = () => {
       label: "Failed",
     },
   };
+
+  // Fetch tasks for Audit, Confirmed, and Failed
+  const fetchTasks = async (status) => {
+    setLoading(true);
+    try {
+      const response = await filteredTask(status.toLowerCase());
+      setTasks(response?.data || []);
+    } catch (error) {
+      toast.error(error.message || "Failed to fetch tasks");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch tasks for YouTube, Instagram, and Facebook
+  const fetchCategoryTasks = async (category) => {
+    setSocialTaskLoading(true);
+    try {
+      const response = await filteredSocialTask(category.toLowerCase());
+      console.log(response, "response");
+      setCategoryTasks(response?.data || []);
+    } catch (error) {
+      toast.error(error.message || "Failed to fetch tasks for category");
+    } finally {
+      setSocialTaskLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks(activeTab);
+  }, [activeTab]);
+
+  useEffect(() => {
+    fetchCategoryTasks(activeCategory);
+  }, [activeCategory]);
+
+  const handleCardClick = async (task) => {
+    try {
+      const response = await performTask(task?._id); 
+  
+      navigate("/task-details", { state: { task, apiResponse: response } });
+    } catch (error) {
+      toast.error(error.message || "Failed to perform task");
+    }
+  };
+  
 
   return (
     <div className="mobile-container">
@@ -39,8 +98,9 @@ const TaskPage = () => {
 
       {/* Content */}
       <div className="mobile-content">
+        {/* Tabs for Audit, Confirmed, Failed */}
         <div className="task-tabs">
-          {["Doing", "Audit", "Completed", "Failed"].map((tab, index) => (
+          {["Audit", "Confirmed", "Failed"].map((tab, index) => (
             <button
               key={index}
               className={`tab ${activeTab === tab ? "active" : ""}`}
@@ -51,45 +111,141 @@ const TaskPage = () => {
           ))}
         </div>
 
-        <div className="task-card">
-          <div className="task-icon">{taskData[activeTab].icon}</div>
-          <div className="task-details">
-            <h4>{taskData[activeTab].label}:</h4>
-            <p>
-              Like and follow and take screenshots. Upload to the platform.
-            </p>
-            <div className="task-info">
-              <p>
-                <strong>Unit Price:</strong> <span>Rs5</span>
-              </p>
-              <p>
-                <strong>Create:</strong> 2021-07-01 16:38:53
-              </p>
-              <p>
-                <strong>Audit:</strong> 2021-07-01 16:38:53
-              </p>
-              <div className="links">
-                <a href="#" className="link">
-                  Open the link
-                </a>
-                {" | "}
-                <a href="#" className="link">
-                  Copy the link
-                </a>
+        {/* Task Cards */}
+
+        {loading ? (
+          <div className="task-card loading-card">
+            <p>Loading tasks...</p>
+          </div>
+        ) : tasks.length > 0 ? (
+          tasks?.map((task, index) => (
+            <div
+              style={{ cursor: "pointer" }}
+              key={index}
+              className="task-card"
+              onClick={() => handleCardClick(task)}
+            >
+              <div className="task-icon">{taskData[activeTab].icon}</div>
+              <div className="task-details">
+                <h4>{task.taskId?.name || "Task Name Not Available"}</h4>
+                <div className="task-info">
+                  <p>
+                    <strong>Reward:</strong>
+                    <span>{task.taskId?.reward || "-"}</span>
+                  </p>
+                  <p>
+                    <strong>Task Category:</strong>
+                    {task.taskId?.taskCategory || "-"}
+                  </p>
+                  <p>
+                    <strong>Created At:</strong>{" "}
+                    {new Date(task?.createdAt).toLocaleString() || "-"}
+                  </p>
+                  <p>
+                    <strong>Status:</strong> {task?.status || activeTab}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-
-          {taskData[activeTab].showSubmit && (
-            <div className="task-actions">
-              <button className="submit-btn">Submit</button>
+          ))
+        ) : (
+          <div className="task-card no-task-card">
+            <div className="task-icon">{taskData[activeTab].icon}</div>
+            <div className="task-details">
+              <h4>No Tasks Found</h4>
             </div>
-          )}
+          </div>
+        )}
+
+        {/* Tabs for YouTube, Instagram, Facebook */}
+        <div className="task-tabs">
+          {["YouTube", "Instagram", "Facebook"].map((category, index) => (
+            <button
+              key={index}
+              className={`tab ${
+                activeCategory === category.toLowerCase() ? "active" : ""
+              }`}
+              onClick={() => setActiveCategory(category.toLowerCase())}
+            >
+              {category}
+            </button>
+          ))}
         </div>
+
+        {/* Category Task Cards */}
+        {socialTaskloading ? (
+          <div className="task-card loading-card">
+            <p>Loading tasks...</p>
+          </div>
+        ) : categoryTasks.length > 0 ? (
+          categoryTasks?.map((task, index) => (
+            <div
+              key={index}
+              className="task-card"
+              onClick={() => handleCardClick(task)}
+            >
+              <div className="task-icon">
+                {activeCategory === "youtube" && (
+                  <FaYoutube className="youtube-icon" />
+                )}
+                {activeCategory === "instagram" && (
+                  <FaInstagram className="instagram-icon" />
+                )}
+                {activeCategory === "facebook" && (
+                  <FaFacebook className="facebook-icon" />
+                )}
+              </div>
+              <div className="task-details">
+                {/* Task Name */}
+                <h4>{task.name || "Unnamed Task"}</h4>
+
+                {/* Task Info */}
+                <div className="task-info">
+                  <p>
+                    <strong>Reward:</strong> <span>{task.reward || "-"}</span>
+                  </p>
+                  <p>
+                    <strong>Task Category:</strong>{" "}
+                    <span>{task.taskCategory || "-"}</span>
+                  </p>
+                  <p>
+                    <strong>Created At:</strong>{" "}
+                    <span>
+                      {task.createdAt
+                        ? new Date(task.createdAt).toLocaleString()
+                        : "-"}
+                    </span>
+                  </p>
+                  <p>
+                    <strong>Status:</strong>{" "}
+                    <span>{task.isDisabled ? "Disabled" : "Active"}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="task-card no-task-card">
+            <div className="task-icon">
+              {activeCategory === "youtube" && (
+                <FaYoutube className="youtube-icon" />
+              )}
+              {activeCategory === "instagram" && (
+                <FaInstagram className="instagram-icon" />
+              )}
+              {activeCategory === "facebook" && (
+                <FaFacebook className="facebook-icon" />
+              )}
+            </div>
+            <div className="task-details">
+              <h4>No Tasks Found</h4>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Footer */}
-       <FooterComponent />
+      <FooterComponent />
     </div>
   );
 };

@@ -16,6 +16,7 @@ import EditProfilePage from "./Pages/Profile/editProfile";
 import PackageDetails from "./Pages/VIP/packageDetails";
 import InviteFriendsPage from "./Pages/InviteFriend/inviteFriend";
 import WalletPage from "./Pages/Wallet/wallet";
+import TaskDetailsPage from "./Pages/TaskDetails/taskDetails";
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/team-reports" element={<PrivateRoutes element={<TeamReports />} />} />
         <Route path="/profit" element={<PrivateRoutes element={<ProfitPage />} />} />
         <Route path="/task" element={<PrivateRoutes element={<TaskPage />} />} />
+        <Route path="/task-details" element={<PrivateRoutes element={<TaskDetailsPage />} />} />
         <Route path="/vip" element={<PrivateRoutes element={<VipPage />} />} />
         <Route path="/wallet" element={<PrivateRoutes element={<WalletPage />} />} />
         <Route path="/package-details" element={<PrivateRoutes element={<PackageDetails />} />} />
