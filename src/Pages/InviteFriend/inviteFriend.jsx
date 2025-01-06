@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
@@ -12,27 +11,6 @@ const InviteFriendsPage = () => {
   const [inviteLink, setInviteLink] = useState("");
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const fetchReferralCode = async () => {
-  //     try {
-  //       const profileData = await getUserProfile();
-  //       if (profileData?.data?.refCode) {
-  //         const refCode = profileData.data.refCode;
-  //         setRefCode(refCode);
-  //         setInviteLink(`${window.location.origin}/invite-friends/${refCode}`); 
-  //         await inviteFriends(refCode);
-  //       } else {
-  //         toast.error("Referral code not found.");
-  //       }
-  //     } catch (error) {
-  //       toast.error(error.message || "Failed to fetch referral code.");
-  //     }
-  //   };
-
-  //   fetchReferralCode();
-  // }, []);
-
-
   useEffect(() => {
     const fetchReferralCode = async () => {
       try {
@@ -40,7 +18,8 @@ const InviteFriendsPage = () => {
         if (profileData?.data?.refCode) {
           const refCode = profileData.data.refCode;
           setRefCode(refCode);
-          const staticBaseUrl = `http://3.91.179.101/sign-up/${refCode}`;
+          // const staticBaseUrl = `http://3.91.179.101/sign-up/${refCode}`;
+          const staticBaseUrl = `https://add-and-earn-web.vercel.app/sign-up/${refCode}`;
           setInviteLink(staticBaseUrl);
           await inviteFriends(refCode);
         } else {
@@ -50,10 +29,9 @@ const InviteFriendsPage = () => {
         toast.error(error.message || "Failed to fetch referral code.");
       }
     };
-  
+
     fetchReferralCode();
   }, []);
-  
 
   const handleCopy = (text) => {
     navigator.clipboard.writeText(text);
@@ -71,7 +49,6 @@ const InviteFriendsPage = () => {
         </button>
         <h2>Invite Friends</h2>
       </header>
-
 
       {/* Content */}
       <div className="mobile-profile-content">

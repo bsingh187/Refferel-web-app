@@ -18,19 +18,6 @@ export default function TaskDetailsPage() {
       </header>
 
       <div className="mobile-content">
-        {apiResponse ? (
-          <div className="api-response-card">
-            <h4>API Response</h4>
-            <p>
-              <strong>Message:</strong>{" "}
-              {apiResponse.message || "No message available"}
-            </p>
-          </div>
-        ) : (
-          <div className="no-api-response">
-            <h4>No API Response Found</h4>
-          </div>
-        )}
 
         {task ? (
           <div className="task-details-card">

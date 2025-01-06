@@ -15,7 +15,6 @@ import {
   FaUser,
 } from "react-icons/fa";
 import { getRecentlySignedUpUsers } from "../../Service/recentlySignupUser.Service";
-import { toast } from "react-toastify";
 
 const HomePage = () => {
   const [banners, setBanners] = useState([]);
@@ -50,7 +49,7 @@ const HomePage = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Banner rotation logic
+  // Banner rotation logic /
   useEffect(() => {
     if (banners.length > 1) {
       const interval = setInterval(() => {
@@ -63,7 +62,7 @@ const HomePage = () => {
   // Handle restricted navigation
   const handleNavigate = (path) => {
     if (!isLoggedIn) {
-      toast.error("Please login or sign up to access this feature.");
+      navigate("/");
     } else {
       navigate(path);
     }
