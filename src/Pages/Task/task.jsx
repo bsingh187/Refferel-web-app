@@ -12,7 +12,7 @@ import {
   filteredTask,
   filteredSocialTask,
   performTask,
-} from "../../Service/task.Service"; // Import both services
+} from "../../Service/task.Service";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -24,6 +24,7 @@ const TaskPage = () => {
   const [activeCategory, setActiveCategory] = useState("youtube");
   const [categoryTasks, setCategoryTasks] = useState([]);
   const navigate = useNavigate();
+  console.log(categoryTasks, "categoryTasks");
 
   const taskData = {
     Audit: {
@@ -80,15 +81,28 @@ const TaskPage = () => {
 
   const handleCardClick = async (task) => {
     try {
-      const response = await performTask(task?._id); 
-  
-      navigate("/task-details", { state: { task, apiResponse: response } });
+      if (
+        ["youtube", "instagram", "facebook"].includes(
+          activeCategory.toLowerCase()
+        )
+      ) {
+        // Trigger API only for social categories
+        const response = await performTask(task?._id);
+        navigate("/task-details", { state: { task, apiResponse: response } });
+      } else if (
+        ["audit", "confirmed", "failed"].includes(activeTab.toLowerCase())
+      ) {
+        // Directly navigate for Audit, Confirmed, and Failed without API call
+        navigate("/task-details", { state: { task } });
+      }
     } catch (error) {
       toast.error(error.message || "Failed to perform task");
     }
   };
-  
 
+  const handleAuditCardClick = (task) => {
+    navigate("/task-details", { state: { task } });
+  };
   return (
     <div className="mobile-container">
       {/* Header */}
@@ -114,7 +128,10 @@ const TaskPage = () => {
         {/* Task Cards */}
 
         {loading ? (
-          <div className="task-card loading-card">
+          <div
+            className="task-card loading-card"
+            style={{ color: "white", backgroundColor: "#142850" }}
+          >
             <p>Loading tasks...</p>
           </div>
         ) : tasks.length > 0 ? (
@@ -123,14 +140,14 @@ const TaskPage = () => {
               style={{ cursor: "pointer" }}
               key={index}
               className="task-card"
-              onClick={() => handleCardClick(task)}
+              onClick={() => handleAuditCardClick(task)}
             >
               <div className="task-icon">{taskData[activeTab].icon}</div>
               <div className="task-details">
                 <h4>{task.taskId?.name || "Task Name Not Available"}</h4>
                 <div className="task-info">
                   <p>
-                    <strong>Reward:</strong>
+                    <strong>Pay Rs:</strong>
                     <span>{task.taskId?.reward || "-"}</span>
                   </p>
                   <p>
@@ -202,7 +219,7 @@ const TaskPage = () => {
                 {/* Task Info */}
                 <div className="task-info">
                   <p>
-                    <strong>Reward:</strong> <span>{task.reward || "-"}</span>
+                    <strong>Pay Rs:</strong> <span>{task.reward || "-"}</span>
                   </p>
                   <p>
                     <strong>Task Category:</strong>{" "}

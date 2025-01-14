@@ -10,6 +10,10 @@ const InviteFriendsPage = () => {
   const [refCode, setRefCode] = useState("");
   const [inviteLink, setInviteLink] = useState("");
   const navigate = useNavigate();
+  const [showTooltip, setShowTooltip] = useState({
+    refCode: false,
+    inviteLink: false,
+  });
 
   useEffect(() => {
     const fetchReferralCode = async () => {
@@ -33,8 +37,12 @@ const InviteFriendsPage = () => {
     fetchReferralCode();
   }, []);
 
-  const handleCopy = (text) => {
+  const handleCopy = (text, type) => {
     navigator.clipboard.writeText(text);
+    setShowTooltip((prev) => ({ ...prev, [type]: true }));
+    setTimeout(() => {
+      setShowTooltip((prev) => ({ ...prev, [type]: false }));
+    }, 4000);
   };
 
   return (
@@ -66,13 +74,27 @@ const InviteFriendsPage = () => {
             <p>
               Referral code: <strong>{refCode}</strong>
             </p>
-            <h5 onClick={() => handleCopy(refCode)} className="copied-color">
-              Copy recommendation code
-            </h5>
+            <div className="copy-button-container">
+              <button
+                onClick={() => handleCopy(refCode, "refCode")}
+                className="copy-button"
+              >
+                Copy Recommendation Code
+              </button>
+              {showTooltip.refCode && <span className="tooltip">Copied!</span>}
+            </div>
             <p>{inviteLink}</p>
-            <h5 onClick={() => handleCopy(inviteLink)} className="copied-color">
-              Copy the invitation link
-            </h5>
+            <div className="copy-button-container">
+              <button
+                onClick={() => handleCopy(inviteLink, "inviteLink")}
+                className="copy-button"
+              >
+                Copy Invitation Link
+              </button>
+              {showTooltip.inviteLink && (
+                <span className="tooltip">Copied!</span>
+              )}
+            </div>
           </div>
         </div>
       </div>

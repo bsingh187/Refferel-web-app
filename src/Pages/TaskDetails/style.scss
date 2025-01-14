@@ -74,7 +74,7 @@
   }
 
   .task-details-card {
-    background-color: gray;
+    background-color: #142850;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -112,4 +112,38 @@
     font-weight: bold;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
+
+  .jump-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #28a745; /* Green background */
+    color: white;
+    padding: 15px 25px; /* Adjust padding for larger size */
+    border-radius: 10px; /* Rounded corners */
+    cursor: pointer;
+    font-size: 18px; /* Larger text */
+    font-weight: bold; /* Bold text */
+    margin: 20px auto; /* Center align */
+    max-width: 250px; /* Restrict width */
+    width: 100%; /* Responsive width */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add box shadow */
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+  }
+  
+  .jump-button:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+  }
+  
+  .jump-arrow-icon {
+    margin-right: 10px; /* Space between icon and text */
+    font-size: 24px; /* Larger icon size */
+  }
+  
+  .jump-text {
+    font-size: 18px; /* Larger text */
+  }
+  
 }

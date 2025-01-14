@@ -19,7 +19,7 @@
   .mobile-content {
     flex: 1;
     padding: 10px;
-    overflow-y: auto; 
+    overflow-y: auto;
     margin-bottom: 40px;
 
     .tab-section {
@@ -60,7 +60,7 @@
         padding: 15px;
         text-align: center;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        height: 60px; 
+        height: 60px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -111,7 +111,6 @@
         }
       }
     }
-    
 
     .earnings-section {
       .earnings-row {
@@ -131,6 +130,47 @@
       }
     }
   }
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  .personal-info {
+    margin-top: 20px;
+  }
+
+  .personal-info p {
+    margin: 10px 0;
+    font-size: 16px;
+  }
 }
 
 .edit-profile-btn,
@@ -143,16 +183,16 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-left: 10px; 
-  white-space: nowrap; 
+  margin-left: 10px;
+  white-space: nowrap;
 }
 .logout-btn {
-  background-color: red; 
+  background-color: red;
 }
 
 .edit-icon,
 .logout-icon {
-  margin-right: 5px; 
+  margin-right: 5px;
   font-size: 16px;
 }
 

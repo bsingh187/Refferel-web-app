@@ -43,7 +43,6 @@ const LoginPage = () => {
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
         {({ isSubmitting, errors }) => (
           <Form>
-            {errors.general && <div className="error general-error">{errors.general}</div>}
             <div className="form-group">
               <label htmlFor="phone">
                 Username or Phone<span className="required">*</span>

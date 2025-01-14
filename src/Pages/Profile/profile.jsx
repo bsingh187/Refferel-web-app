@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { useNavigate } from "react-router-dom";
 import { FaSignOutAlt, FaUserCircle, FaEdit } from "react-icons/fa";
+import { IoIosClose } from "react-icons/io";
 import { getUserProfile, getWalletBalance } from "../../Service/getUserProfile";
 import FooterComponent from "../../components/footer";
 
@@ -10,6 +11,7 @@ const ProfilePage = () => {
   const [userData, setUserData] = useState({});
   const [error, setError] = useState("");
   const [totalRevenue, setTotalRevenue] = useState(0);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -54,6 +56,9 @@ const ProfilePage = () => {
   const handleInviteFriends = () => {
     navigate("/invite-friends");
   };
+  const toggleModal = () => {
+    setShowModal(!showModal); // Toggle modal visibility
+  };
 
   return (
     <div className="mobile-container">
@@ -78,9 +83,9 @@ const ProfilePage = () => {
             >
               <FaEdit className="edit-icon" /> Edit
             </button>
-            <button onClick={handleLogOut} className="logout-btn">
+            {/* <button onClick={handleLogOut} className="logout-btn">
               <FaSignOutAlt className="logout-icon" /> Logout
-            </button>
+            </button> */}
           </div>
         </section>
 
@@ -119,7 +124,7 @@ const ProfilePage = () => {
         {/* Cards Section */}
         <div className="cards-container">
           <div className="crads-adjust">
-            <div className="card">
+            <div className="card" onClick={toggleModal}>
               <span className="card-icon">👤</span>
               <p>Personal Information</p>
             </div>
@@ -133,6 +138,10 @@ const ProfilePage = () => {
               <span className="card-icon">🤝</span>
               <p>Support</p>
             </div>
+            <div className="card" onClick={handleLogOut}>
+              <FaSignOutAlt className="logout-icon" />
+              <p>Log-out</p>
+            </div>
           </div>
           <div className="crads-adjust">
             {/* <div className="card" onClick={handleTeamReports}>
@@ -142,6 +151,42 @@ const ProfilePage = () => {
           </div>
         </div>
       </div>
+
+      {/* Modal */}
+      {/* Modal */}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button className="close-modal" onClick={toggleModal}>
+              <IoIosClose />
+            </button>
+            <h3>Personal Information</h3>
+            <div className="personal-info">
+              <p>
+                <strong>First Name:</strong> {userData?.firstName || "-"}
+              </p>
+              <p>
+                <strong>Email:</strong> {userData?.email || "-"}
+              </p>
+              <p>
+                <strong>Phone:</strong> {userData?.phone || "-"}
+              </p>
+              <p>
+                <strong>Instagram ID:</strong> {userData?.instagramId || "-"}
+              </p>
+              <p>
+                <strong>Referral Code:</strong> {userData?.refCode || "-"}
+              </p>
+              <p>
+                <strong>Bank Account Number:</strong> {userData?.bankAccountNumber || "-"}
+              </p>
+              <p>
+                <strong>Account Balance:</strong> Rs {userData?.balance || 0}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
 

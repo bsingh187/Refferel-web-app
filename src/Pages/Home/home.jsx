@@ -142,7 +142,7 @@ const HomePage = () => {
           </div>
 
           <div className="carousel-indicators">
-            {banners.map((_, index) => (
+            {banners?.map((_, index) => (
               <div
                 key={index}
                 className={`carousel-indicator ${

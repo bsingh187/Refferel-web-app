@@ -13,7 +13,9 @@ const VipPage = () => {
   const [packages, setPackages] = useState([]);
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
   const [showCards, setShowCards] = useState(false);
-  const [loadingPackage, setLoadingPackage] = useState(null); 
+  const [loadingPackage, setLoadingPackage] = useState(null);
+  const [selectedPackage, setSelectedPackage] = useState(null);
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
 
   const navigate = useNavigate();
 
@@ -70,16 +72,29 @@ const VipPage = () => {
     navigate("/package-details", { state: { packageId } });
   };
 
-  const handleBuyPackage = async (packageId) => {
-    setLoadingPackage(packageId); 
+  const handleBuyPackage = async () => {
+    if (!selectedPackage) return;
+
+    setLoadingPackage(selectedPackage);
+    setShowConfirmPopup(false);
     try {
-      const response = await buyPackage(packageId);
-      toast.success(response?.data?.message)
+      const response = await buyPackage(selectedPackage);
+      toast.success(response?.data?.message);
     } catch (error) {
       toast.error(error.message || "Failed to buy package.");
     } finally {
       setLoadingPackage(null);
     }
+  };
+
+  const openConfirmPopup = (packageId) => {
+    setSelectedPackage(packageId);
+    setShowConfirmPopup(true);
+  };
+
+  const closeConfirmPopup = () => {
+    setSelectedPackage(null);
+    setShowConfirmPopup(false);
   };
 
   return (
@@ -127,15 +142,18 @@ const VipPage = () => {
                     <p className="vip-tasks">
                       Daily Tasks: {pkg?.dailyTask || pkg?.task}
                     </p>
-                    <div >
+                    <div>
                       <button
                         className="buy-package-button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleBuyPackage(pkg._id);
+                          openConfirmPopup(pkg._id);
                         }}
+                        disabled={loadingPackage === pkg._id}
                       >
-                        Buy Package
+                        {loadingPackage === pkg._id
+                          ? "Processing..."
+                          : "Buy Package"}
                       </button>
                     </div>
                   </div>
@@ -145,6 +163,25 @@ const VipPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Confirmation Popup */}
+      {showConfirmPopup && (
+        <div className="confirmation-popup">
+          <div className="popup-content">
+            <h3>Are you sure?</h3>
+            <p>Do you want to buy this package?</p>
+            <div className="popup-actions">
+              <button className="confirm-button" onClick={handleBuyPackage}>
+                Yes, Buy
+              </button>
+              <button className="cancel-button" onClick={closeConfirmPopup}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <FooterComponent />
     </div>
   );
