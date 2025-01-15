@@ -5,12 +5,14 @@ import { FaSignOutAlt, FaUserCircle, FaEdit } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
 import { getUserProfile, getWalletBalance } from "../../Service/getUserProfile";
 import FooterComponent from "../../components/footer";
+import { getAllSupportChat } from "../../Service/support.Service";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
   const [error, setError] = useState("");
   const [totalRevenue, setTotalRevenue] = useState(0);
+  const [showSupportModal, setShowSupportModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -38,6 +40,7 @@ const ProfilePage = () => {
 
     fetchUserProfile();
     fetchWallet();
+    getAllSupportChat();
   }, []);
 
   const handleLogOut = () => {
@@ -45,9 +48,9 @@ const ProfilePage = () => {
     navigate("/");
   };
 
-  const handleTeamReports = () => {
-    navigate("/team-reports");
-  };
+  // const handleTeamReports = () => {
+  //   navigate("/team-reports");
+  // };
 
   const handleEditProfile = () => {
     navigate("/edit-profile");
@@ -56,8 +59,13 @@ const ProfilePage = () => {
   const handleInviteFriends = () => {
     navigate("/invite-friends");
   };
+
   const toggleModal = () => {
-    setShowModal(!showModal); // Toggle modal visibility
+    setShowModal(!showModal);
+  };
+
+  const toggleSupportModal = () => {
+    setShowSupportModal(!showSupportModal);
   };
 
   return (
@@ -83,9 +91,6 @@ const ProfilePage = () => {
             >
               <FaEdit className="edit-icon" /> Edit
             </button>
-            {/* <button onClick={handleLogOut} className="logout-btn">
-              <FaSignOutAlt className="logout-icon" /> Logout
-            </button> */}
           </div>
         </section>
 
@@ -95,30 +100,6 @@ const ProfilePage = () => {
               Balance (Rs): {userData?.balance || 0}
             </div>
           </div>
-          {/* <div className="earnings-row">
-            <div className="earning-card">
-              Today's Earnings (Rs): {userData?.todayEarning || 0}
-            </div>
-            <div className="earning-card">
-              This week's Earnings (Rs): {userData?.weekEarning || 0}
-            </div>
-          </div>
-          <div className="earnings-row">
-            <div className="earning-card">
-              This month's Earnings (Rs): {userData?.monthEarning || 0}
-            </div>
-            <div className="earning-card">
-              Last month's Earnings (Rs): {userData?.lastmonthEarning || 0}
-            </div>
-          </div>
-          <div className="earnings-row">
-            <div className="earning-card">
-              Total revenue (Rs): {totalRevenue || 0}
-            </div>
-            <div className="earning-card">
-              Complete the task today (PCE): {userData?.completetask || 0}
-            </div>
-          </div> */}
         </section>
 
         {/* Cards Section */}
@@ -134,7 +115,7 @@ const ProfilePage = () => {
             </div>
           </div>
           <div className="crads-adjust">
-            <div className="card">
+            <div className="card" onClick={toggleSupportModal}>
               <span className="card-icon">🤝</span>
               <p>Support</p>
             </div>
@@ -152,7 +133,6 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      {/* Modal */}
       {/* Modal */}
       {showModal && (
         <div className="modal-overlay">
@@ -178,11 +158,45 @@ const ProfilePage = () => {
                 <strong>Referral Code:</strong> {userData?.refCode || "-"}
               </p>
               <p>
-                <strong>Bank Account Number:</strong> {userData?.bankAccountNumber || "-"}
+                <strong>Bank Account Number:</strong>{" "}
+                {userData?.bankAccountNumber || "-"}
               </p>
               <p>
                 <strong>Account Balance:</strong> Rs {userData?.balance || 0}
               </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Support Chat Modal */}
+      {showSupportModal && (
+        <div className="modal-overlay">
+          <div className="modal-content chat-modal">
+            <button className="close-modal" onClick={toggleSupportModal}>
+              <IoIosClose />
+            </button>
+            <div className="chat-header">
+              <h3>Admin support</h3>
+            </div>
+            <div className="chat-body">
+              <div className="message sender">
+                <p>Hello, how can we help you today?</p>
+              </div>
+              <div className="message receiver">
+                <p>I need help with my account balance.</p>
+              </div>
+              <div className="message sender">
+                <p>Sure! Can you provide more details?</p>
+              </div>
+            </div>
+            <div className="chat-footer">
+              <input
+                type="text"
+                className="chat-input"
+                placeholder="Type a message..."
+              />
+              <button className="send-button">Send</button>
             </div>
           </div>
         </div>

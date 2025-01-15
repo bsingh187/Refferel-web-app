@@ -32,40 +32,78 @@
   color: white;
 }
 
+
 .task-card {
-  background: white;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #142850;
   border-radius: 8px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-  margin: 20px 0;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  margin: 15px 0;
+  padding: 7px;
   cursor: pointer;
 }
 
+.task-icon-container {
+  display: flex;
+  flex-direction: column; /* Stack icon and status vertically */
+  align-items: center; /* Center align icon and status */
+  justify-content: center;
+  margin-left: 15px; /* Space between icon container and task details */
+}
+
+.task-category {
+  font-size: 14px;
+  color: #ffffff; /* White text for task category */
+  margin-top: 5px; /* Space between icon and category */
+}
+
+.task-status {
+  font-size: 14px;
+  color: #ffffff; /* White text for status */
+  margin-top: 5px; /* Space between icon and status */
+}
+
 .task-icon {
-  font-size: 36px;
+  font-size: 24px;
   color: #007bff;
-  margin-bottom: 10px;
+}
+
+.task-details {
+  display: flex;
+  justify-content: space-evenly;
+  flex: 1; /* Allow task details to expand */
+  color: #ffffff;
 }
 
 .task-details h4 {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.task-info {
+  display: flex;
+  flex-direction: row; /* Arrange pay info horizontally */
+  align-items: center;
+  gap: 10px; /* Add spacing between pay info */
 }
 
 .task-details p {
   font-size: 14px;
-  color: #666;
+  color: white;
 }
 
-.task-info {
-  margin-top: 10px;
+.task-info p {
+  margin: 0;
   font-size: 14px;
-  color: #333;
+  color: #e0e0e0;
+}
+
+.task-info strong {
+  color: #ffffff; /* Highlight labels */
 }
 
 .task-actions .submit-btn {
@@ -86,9 +124,14 @@
 .no-task-card {
   opacity: 0.9;
   background-color: #f8f9fa;
+  color: #121212;
+  text-align: center;
+  padding: 15px;
+  border-radius: 8px;
 }
 
 .loading-card p {
   font-size: 16px;
   color: #888;
 }
+

@@ -3,30 +3,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./style.scss";
 import { toast } from "react-toastify";
 import { FaArrowRight } from "react-icons/fa";
-import { performTask } from "../../Service/task.Service";
 
 export default function TaskDetailsPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const task = location.state?.task;
-
-  const handleJumpClick = async (taskId, taskLink) => {
-    try {
-      const response = await performTask(taskId);
-      if (response?.statusCode === 200) {
-        toast.success("Task performed successfully!");
-        if (taskLink) {
-          window.open(taskLink, "_blank");
-        } else {
-          toast.warn("Task link not available.");
-        }
-      } else {
-        toast.error("Failed to perform the task.");
-      }
-    } catch (error) {
-      toast.error(error.message || "Error performing task.");
-    }
-  };
 
   return (
     <div className="mobile-container">
@@ -66,12 +47,16 @@ export default function TaskDetailsPage() {
 
             <div
               className="jump-button"
-              onClick={() =>
-                handleJumpClick(
-                  task?._id,
-                  task?.taskId?.taskLink || task?.taskLink
-                )
-              }
+              onClick={() => {
+                if (task?.taskId?.taskLink || task?.taskLink) {
+                  window.open(
+                    task?.taskId?.taskLink || task?.taskLink,
+                    "_blank"
+                  );
+                } else {
+                  toast.warn("Task link not available.");
+                }
+              }}
             >
               <FaArrowRight className="jump-arrow-icon" />
               <span className="jump-text"></span>

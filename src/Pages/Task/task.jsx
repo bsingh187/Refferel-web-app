@@ -142,24 +142,16 @@ const TaskPage = () => {
               className="task-card"
               onClick={() => handleAuditCardClick(task)}
             >
-              <div className="task-icon">{taskData[activeTab].icon}</div>
+              <div className="task-icon-container">
+                <div className="task-icon">{taskData[activeTab].icon}</div>
+                <p className="task-status">{task?.status || activeTab}</p>
+              </div>
               <div className="task-details">
-                <h4>{task.taskId?.name || "Task Name Not Available"}</h4>
+                <h4>{task.taskId?.name || "-"}</h4>
                 <div className="task-info">
                   <p>
                     <strong>Pay Rs:</strong>
                     <span>{task.taskId?.reward || "-"}</span>
-                  </p>
-                  <p>
-                    <strong>Task Category:</strong>
-                    {task.taskId?.taskCategory || "-"}
-                  </p>
-                  <p>
-                    <strong>Created At:</strong>{" "}
-                    {new Date(task?.createdAt).toLocaleString() || "-"}
-                  </p>
-                  <p>
-                    <strong>Status:</strong> {task?.status || activeTab}
                   </p>
                 </div>
               </div>
@@ -201,41 +193,23 @@ const TaskPage = () => {
               className="task-card"
               onClick={() => handleCardClick(task)}
             >
-              <div className="task-icon">
+              <div className="task-icon-container">
                 {activeCategory === "youtube" && (
-                  <FaYoutube className="youtube-icon" />
+                  <FaYoutube className="task-icon" />
                 )}
                 {activeCategory === "instagram" && (
-                  <FaInstagram className="instagram-icon" />
+                  <FaInstagram className="task-icon" />
                 )}
                 {activeCategory === "facebook" && (
-                  <FaFacebook className="facebook-icon" />
+                  <FaFacebook className="task-icon" />
                 )}
+                <p className="task-category">{task.taskCategory || "-"}</p>
               </div>
               <div className="task-details">
-                {/* Task Name */}
                 <h4>{task.name || "Unnamed Task"}</h4>
-
-                {/* Task Info */}
                 <div className="task-info">
                   <p>
                     <strong>Pay Rs:</strong> <span>{task.reward || "-"}</span>
-                  </p>
-                  <p>
-                    <strong>Task Category:</strong>{" "}
-                    <span>{task.taskCategory || "-"}</span>
-                  </p>
-                  <p>
-                    <strong>Created At:</strong>{" "}
-                    <span>
-                      {task.createdAt
-                        ? new Date(task.createdAt).toLocaleString()
-                        : "-"}
-                    </span>
-                  </p>
-                  <p>
-                    <strong>Status:</strong>{" "}
-                    <span>{task.isDisabled ? "Disabled" : "Active"}</span>
                   </p>
                 </div>
               </div>

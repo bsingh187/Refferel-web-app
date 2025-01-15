@@ -171,6 +171,84 @@
     margin: 10px 0;
     font-size: 16px;
   }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content.chat-modal {
+    background: #ffffff;
+    // width: 17%;
+    max-width: 300px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .chat-header {
+    background: #075e54;
+    color: white;
+    text-align: center;
+  }
+
+  .chat-body {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .message {
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+  }
+
+  .message.sender {
+    background: #075e54;
+    align-self: flex-start;
+  }
+
+  .message.receiver {
+    background: #25d366;
+    align-self: flex-end;
+  }
+
+  .chat-footer {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+  }
+
+  .chat-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    margin-right: 10px;
+    background: #f0f0f0;
+  }
+
+  .send-button {
+    background: #075e54;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
 }
 
 .edit-profile-btn,

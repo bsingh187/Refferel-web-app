@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
-import { addBalance, withdrawBalance, fetchTransactions } from "../../Service/wallet.Service";
+import {
+  addBalance,
+  withdrawBalance,
+  fetchTransactions,
+} from "../../Service/wallet.Service";
 import FooterComponent from "../../components/footer";
 import { getUserProfile } from "../../Service/getUserProfile";
 import { toast } from "react-toastify";
@@ -18,7 +22,7 @@ const WalletPage = () => {
       try {
         const response = await getUserProfile();
         if (response?.data?.balance !== undefined) {
-          setBalance(response.data.balance / 100); // Assuming balance is in paisa
+          setBalance(response.data.balance);
         }
       } catch (error) {
         console.error("Error fetching user profile:", error.message);
@@ -44,7 +48,7 @@ const WalletPage = () => {
 
   const handleActionChange = (newAction) => {
     setAction(newAction);
-    setAmount(""); // Clear the input field when switching actions
+    setAmount("");
   };
 
   const handleSubmit = async (e) => {
@@ -67,13 +71,15 @@ const WalletPage = () => {
         const response = await addBalance(numericAmount);
         if (response?.success) {
           const addedAmount = response?.order?.amount || numericAmount;
-          setBalance((prevBalance) => prevBalance + addedAmount / 100);
+          await getUserProfile();
+          setBalance((prevBalance) => prevBalance + addedAmount);
           setAmount("");
         }
       } else if (action === "withdraw") {
         const response = await withdrawBalance(numericAmount);
         if (response?.statusCode === 200 && response?.error === false) {
-          setBalance((prevBalance) => prevBalance - numericAmount);
+          // setBalance((prevBalance) => prevBalance - numericAmount);
+          await getUserProfile();
           setAmount("");
         }
       }
@@ -94,7 +100,7 @@ const WalletPage = () => {
       {/* Display Current Balance */}
       <div className="balance-info">
         <h4>Balance:</h4>
-        <p>₹{balance.toFixed(2)}</p>
+        <p>₹{balance}</p>
       </div>
 
       {/* Action Buttons */}
@@ -129,7 +135,11 @@ const WalletPage = () => {
             />
           </div>
           <button type="submit" className="save-btn" disabled={loading}>
-            {loading ? "Processing..." : action === "add" ? "Pay Now" : "Withdraw"}
+            {loading
+              ? "Processing..."
+              : action === "add"
+              ? "Pay Now"
+              : "Withdraw"}
           </button>
         </form>
       )}
@@ -142,7 +152,7 @@ const WalletPage = () => {
             {transactions.map((transaction) => (
               <li key={transaction._id}>
                 <p>
-                  <strong>Amount:</strong> ₹{(transaction.amount / 100).toFixed(2)}
+                  <strong>Amount:</strong> ₹{transaction.amount / 100}
                 </p>
                 <p>
                   <strong>Date:</strong>{" "}
