@@ -139,6 +139,7 @@ const VipPage = () => {
                     onClick={() => handleCardClick(pkg?._id)}
                   >
                     <p className="vip-title">{pkg?.name}</p>
+                    <p className="vip-tasks">Price: {pkg?.price}</p>
                     <p className="vip-tasks">
                       Daily Tasks: {pkg?.dailyTask || pkg?.task}
                     </p>

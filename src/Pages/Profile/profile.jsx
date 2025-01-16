@@ -5,7 +5,12 @@ import { FaSignOutAlt, FaUserCircle, FaEdit } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
 import { getUserProfile, getWalletBalance } from "../../Service/getUserProfile";
 import FooterComponent from "../../components/footer";
-import { getAllSupportChat } from "../../Service/support.Service";
+import {
+  getAllSupportChat,
+  secondChat,
+  sendChat,
+} from "../../Service/support.Service";
+import { toast } from "react-toastify";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -14,6 +19,79 @@ const ProfilePage = () => {
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [showSupportModal, setShowSupportModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [inputMessage, setInputMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [conversationId, setConversationId] = useState(null);
+
+  // Fetch chat messages and set conversationId //
+  const fetchChatMessages = async () => {
+    try {
+      const chatResponse = await getAllSupportChat();
+      if (chatResponse?.data) {
+        const { messages, conversationId } = chatResponse.data;
+        setMessages(messages || []);
+        setConversationId(conversationId || null); 
+      } else {
+        setMessages([]); 
+      }
+    } catch (error) {
+      toast.error(error.message || "Failed to load messages.");
+    }
+  };
+
+  // Add this function inside the ProfilePage component //
+  const fetchChatHistory = async () => {
+    try {
+      const chatResponse = await getAllSupportChat();
+      if (chatResponse?.data) {
+        const { messages, conversationId } = chatResponse.data;
+        setMessages(messages || []);
+        setConversationId(conversationId || null);
+      } else {
+        setMessages([]);
+      }
+    } catch (error) {
+      toast.error("Failed to load chat history.");
+    }
+  };
+
+  // Function to send a new message
+  const handleSendMessage = async () => {
+    if (!inputMessage.trim()) {
+      toast.error("Message cannot be empty.");
+      return;
+    }
+
+    const messageData = { content: inputMessage };
+
+    try {
+      if (conversationId) {
+        const response = await secondChat({ ...messageData }, conversationId);
+        if (response) {
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            { sender: "User", content: inputMessage },
+          ]);
+          setInputMessage("");
+        }
+        fetchChatMessages();
+      } else {
+        // Start a new conversation
+        const response = await sendChat({ messageContent: inputMessage });
+        if (response?.conversationId) {
+          setConversationId(response.conversationId);
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            { sender: "User", content: inputMessage },
+          ]);
+          setInputMessage("");
+        }
+        fetchChatMessages();
+      }
+    } catch (error) {
+      toast.error(error.message || "Failed to send message.");
+    }
+  };
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -40,7 +118,8 @@ const ProfilePage = () => {
 
     fetchUserProfile();
     fetchWallet();
-    getAllSupportChat();
+    const chatData = getAllSupportChat();
+    console.log(chatData, "chatData");
   }, []);
 
   const handleLogOut = () => {
@@ -64,8 +143,12 @@ const ProfilePage = () => {
     setShowModal(!showModal);
   };
 
+  // Update the toggleSupportModal function //
   const toggleSupportModal = () => {
     setShowSupportModal(!showSupportModal);
+    if (!showSupportModal) {
+      fetchChatHistory(); 
+    }
   };
 
   return (
@@ -173,30 +256,66 @@ const ProfilePage = () => {
       {showSupportModal && (
         <div className="modal-overlay">
           <div className="modal-content chat-modal">
-            <button className="close-modal" onClick={toggleSupportModal}>
+            <button className="close-modal" style={{color:"white",fontSize:"40px"}} onClick={toggleSupportModal}>
               <IoIosClose />
             </button>
             <div className="chat-header">
-              <h3>Admin support</h3>
+              <p>Admin support</p>
             </div>
             <div className="chat-body">
-              <div className="message sender">
-                <p>Hello, how can we help you today?</p>
-              </div>
-              <div className="message receiver">
-                <p>I need help with my account balance.</p>
-              </div>
-              <div className="message sender">
-                <p>Sure! Can you provide more details?</p>
-              </div>
+              {messages.length > 0 ? (
+                messages?.map((msg, index) => (
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                    key={index}
+                    className={`message-wrapper ${
+                      msg.sender === "User" ? "message-right" : "message-left"
+                    }`}
+                  >
+                    <p
+                      style={{
+                        backgroundColor: "white",
+                        color: "black",
+                        padding: "10px",
+                        borderRadius: "8px",
+                      }}
+                    >
+                      {msg?.sender}
+                    </p>
+                    <div
+                      className={`message ${
+                        msg.sender === "User" ? "receiver" : "sender"
+                      }`}
+                    >
+                      <p
+                        style={{
+                          backgroundColor: "gray",
+                          padding: "10px",
+                          borderRadius: "8px",
+                        }}
+                      >
+                        {msg?.content}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="no-messages">
+                  No messages found. Start a conversation!
+                </p>
+              )}
             </div>
             <div className="chat-footer">
               <input
                 type="text"
                 className="chat-input"
                 placeholder="Type a message..."
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
               />
-              <button className="send-button">Send</button>
+              <button className="send-button" onClick={handleSendMessage}>
+                Send
+              </button>
             </div>
           </div>
         </div>

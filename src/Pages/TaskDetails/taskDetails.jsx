@@ -3,11 +3,39 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./style.scss";
 import { toast } from "react-toastify";
 import { FaArrowRight } from "react-icons/fa";
+import { performTask } from "../../Service/task.Service";
 
 export default function TaskDetailsPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const task = location.state?.task;
+
+  // Function to handle the "Do this Task" button click
+  const handleDoTask = async () => {
+    if (!task) {
+      toast.warn("Task not found.");
+      return;
+    }
+
+    try {
+      // Check if task link exists
+      const taskLink = task?.taskId?.taskLink || task?.taskLink;
+      const taskId = task?.taskId?._id || task?.id;
+
+      if (taskLink) {
+        // Trigger the API call
+        const response = await performTask(taskId);
+        toast.success(response?.message || "Task marked as started");
+
+        // Open the task link
+        window.open(taskLink, "_blank");
+      } else {
+        toast.warn("Task link not available.");
+      }
+    } catch (error) {
+      toast.error(error.message || "An error occurred.");
+    }
+  };
 
   return (
     <div className="mobile-container">
@@ -42,22 +70,11 @@ export default function TaskDetailsPage() {
                 : "-"}
             </p>
             <p>
-              <strong>Status:</strong> {task?.status || "-"}
+              <strong>Task Link:</strong> {task?.taskId?.taskLink || "-"}
             </p>
 
-            <div
-              className="jump-button"
-              onClick={() => {
-                if (task?.taskId?.taskLink || task?.taskLink) {
-                  window.open(
-                    task?.taskId?.taskLink || task?.taskLink,
-                    "_blank"
-                  );
-                } else {
-                  toast.warn("Task link not available.");
-                }
-              }}
-            >
+            <div className="jump-button" onClick={handleDoTask}>
+              Do this Task
               <FaArrowRight className="jump-arrow-icon" />
               <span className="jump-text"></span>
             </div>
