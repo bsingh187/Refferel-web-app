@@ -8,11 +8,7 @@ import {
   FaExclamationCircle,
 } from "react-icons/fa";
 import FooterComponent from "../../components/footer";
-import {
-  filteredTask,
-  filteredSocialTask,
-  performTask,
-} from "../../Service/task.Service";
+import { filteredTask, filteredSocialTask } from "../../Service/task.Service";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -24,7 +20,6 @@ const TaskPage = () => {
   const [activeCategory, setActiveCategory] = useState("youtube");
   const [categoryTasks, setCategoryTasks] = useState([]);
   const navigate = useNavigate();
-  console.log(categoryTasks, "categoryTasks");
 
   const taskData = {
     Audit: {
@@ -87,12 +82,11 @@ const TaskPage = () => {
         )
       ) {
         // Trigger API only for social categories
-        const response = await performTask(task?._id);
-        navigate("/task-details", { state: { task, apiResponse: response } });
+        navigate("/task-details", { state: { task } });
+        console.log(task,"task")
       } else if (
         ["audit", "confirmed", "failed"].includes(activeTab.toLowerCase())
       ) {
-        // Directly navigate for Audit, Confirmed, and Failed without API call
         navigate("/task-details", { state: { task } });
       }
     } catch (error) {

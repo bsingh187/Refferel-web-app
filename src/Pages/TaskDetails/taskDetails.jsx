@@ -10,6 +10,10 @@ export default function TaskDetailsPage() {
   const navigate = useNavigate();
   const task = location.state?.task;
 
+  const isSocialTask = ["youtube", "instagram", "facebook"].includes(
+    task?.taskCategory?.toLowerCase()
+  );
+
   // Function to handle the "Do this Task" button click
   const handleDoTask = async () => {
     if (!task) {
@@ -20,14 +24,12 @@ export default function TaskDetailsPage() {
     try {
       // Check if task link exists
       const taskLink = task?.taskId?.taskLink || task?.taskLink;
-      const taskId = task?.taskId?._id || task?.id;
+      console.log(taskLink, "taskLink");
+      const taskId = task?.taskId?._id || task?._id;
 
       if (taskLink) {
-        // Trigger the API call
-        const response = await performTask(taskId);
-        toast.success(response?.message || "Task marked as started");
+        await performTask(taskId);
 
-        // Open the task link
         window.open(taskLink, "_blank");
       } else {
         toast.warn("Task link not available.");
@@ -69,15 +71,20 @@ export default function TaskDetailsPage() {
                 ? new Date(task?.createdAt).toLocaleString()
                 : "-"}
             </p>
-            <p>
-              <strong>Task Link:</strong> {task?.taskId?.taskLink || "-"}
-            </p>
+            {isSocialTask && (
+              <>
+                <p className="task-link">
+                  <strong>Task Link:</strong>{" "}
+                  {task?.taskId?.taskLink || task?.taskLink}
+                </p>
 
-            <div className="jump-button" onClick={handleDoTask}>
-              Do this Task
-              <FaArrowRight className="jump-arrow-icon" />
-              <span className="jump-text"></span>
-            </div>
+                <div className="jump-button" onClick={handleDoTask}>
+                  Do this Task
+                  <FaArrowRight className="jump-arrow-icon" />
+                  <span className="jump-text"></span>
+                </div>
+              </>
+            )}
           </div>
         ) : (
           <div className="no-task-details">
